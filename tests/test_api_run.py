@@ -1,19 +1,17 @@
 from __future__ import annotations
 
-import pytest
-import torch
 import strategies as st
-from strategies import BACKENDS
 from hypothesis import given, settings
-
 from qadence import QuantumCircuit
-from qadence.types import BackendName
 from qadence.backends.api import backend_factory
-from qadence.ml_tools.utils import rand_featureparameters
 from qadence.backends.jax_utils import jarr_to_tensor, tensor_to_jnp
+from qadence.ml_tools.utils import rand_featureparameters
 from qadence.states import equivalent_state
+from qadence.types import BackendName
+from strategies import BACKENDS
 
-@given(st.digital_circuits())
+
+@given(st.restricted_circuits())
 @settings(deadline=None)
 def test_run_methods(circuit: QuantumCircuit) -> None:
 
@@ -28,9 +26,6 @@ def test_run_methods(circuit: QuantumCircuit) -> None:
         if b == BackendName.HORQRUX:
             wf = jarr_to_tensor(wf)
         wfs += [wf]
-    
+
     for wf in wfs[1:]:
         assert equivalent_state(wf, wfs[0])
-    
-
-    

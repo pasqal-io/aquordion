@@ -49,15 +49,13 @@ BACKENDS = BackendName.list()
 BACKENDS.remove("pulser")
 
 supported_gates_map: dict = {k: supported_gates(k) for k in BACKENDS}
-supported_gates_list: list[Set] = [
-    set(supported_gates(name)) for name in BACKENDS
-]
+supported_gates_list: list[Set] = [set(supported_gates(name)) for name in BACKENDS]
 
 full_gateset = list(
-    reduce(lambda fs, s: fs.union(s), supported_gates_list)  # type: ignore[attr-defined]
+    reduce(lambda fs, s: fs.union(s), supported_gates_list)  # type: ignore[attr-defined, no-any-return]
 )
 minimal_gateset = list(
-    reduce(lambda fs, s: fs.intersection(s), supported_gates_list)  # type: ignore[attr-defined]
+    reduce(lambda fs, s: fs.intersection(s), supported_gates_list)  # type: ignore[attr-defined, no-any-return]
 )
 digital_gateset = list(set(full_gateset) - set(analog_gateset) - set(non_unitary_gateset))
 
@@ -213,7 +211,7 @@ def rand_digital_blocks(gate_list: list[AbstractBlock]) -> Callable:
 
 
 @st.composite
-def digital_circuits(
+def restricted_circuits(
     draw: Callable[[SearchStrategy[Any]], Any],
     n_qubits: SearchStrategy[int] = N_QUBITS_STRATEGY,
     depth: SearchStrategy[int] = CIRCUIT_DEPTH_STRATEGY,
