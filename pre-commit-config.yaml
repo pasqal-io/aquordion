@@ -1,0 +1,28 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        exclude: .gitlab-ci.yml
+      - id: check-added-large-files
+
+  - repo: https://github.com/ambv/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.7.1"
+    hooks:
+      - id: ruff
+        args: [--fix]
+        exclude: examples|docs|benchmarks/python_schema.py|scripts/qnn_pennylane_jax.py|scripts/qnn_flow.py
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.3.0
+    hooks:
+      - id: mypy
+        args: [--install-types, --non-interactive]
+        exclude: examples|docs|benchmarks/python_schema.py|scripts/qnn_pennylane_jax.py|scripts/qnn_flow.py
