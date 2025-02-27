@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import pytest
 import strategies as st
 from hypothesis import given, settings
 from qadence import QuantumCircuit
@@ -10,22 +11,31 @@ from qadence.states import equivalent_state
 from qadence.types import BackendName
 from strategies import BACKENDS
 
+ATOL_32 = 1e-07  # 32 bit precision
+ATOL_DICT = {
+    BackendName.PYQTORCH: ATOL_32,
+    BackendName.HORQRUX: ATOL_32,
+}
+
 
 @given(st.restricted_circuits())
 @settings(deadline=None)
-def test_run_methods(circuit: QuantumCircuit) -> None:
+@pytest.mark.parametrize("backend", BACKENDS)
+def test_run_for_random_circuit(backend: BackendName, circuit: QuantumCircuit) -> None:
+    cfg = {"_use_gate_params": True}
+    inputs = rand_featureparameters(circuit, 1)
 
-    wfs = []
-    for b in BACKENDS:
-        bknd = backend_factory(backend=b, diff_mode=None)
-        (conv_circ, _, embed, params) = bknd.convert(circuit)
-        inputs = rand_featureparameters(circuit, 1)
-        if inputs and b == BackendName.HORQRUX:
-            inputs = {k: tensor_to_jnp(v) for k, v in inputs.items()}
-        wf = bknd.run(conv_circ, embed(params, inputs))
-        if b == BackendName.HORQRUX:
-            wf = jarr_to_tensor(wf)
-        wfs += [wf]
+    # pyqtorch
+    bknd_pyqtorch = backend_factory(backend=BackendName.PYQTORCH, configuration=cfg)
+    (circ_pyqtorch, _, embed_pyqtorch, params_pyqtorch) = bknd_pyqtorch.convert(circuit)
+    wf_pyqtorch = bknd_pyqtorch.run(circ_pyqtorch, embed_pyqtorch(params_pyqtorch, inputs))
 
-    for wf in wfs[1:]:
-        assert equivalent_state(wf, wfs[0])
+    bknd = backend_factory(backend=backend, configuration=cfg)
+    (circ, _, embed, params) = bknd.convert(circuit)
+    if inputs and backend == BackendName.HORQRUX:
+        inputs = {k: tensor_to_jnp(v) for k, v in inputs.items()}
+    wf = bknd.run(circ, embed(params, inputs))
+    if backend == BackendName.HORQRUX:
+        wf = jarr_to_tensor(wf)
+
+    assert equivalent_state(wf_pyqtorch, wf, atol=ATOL_DICT[backend])
