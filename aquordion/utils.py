@@ -10,11 +10,10 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 import sympy
 from numpy.typing import ArrayLike
+from rich.tree import Tree
 from torch import Tensor, stack, vmap
 from torch import complex as make_complex
 from torch.linalg import eigvals
-
-from rich.tree import Tree
 
 from aquordion.blocks import AbstractBlock
 from aquordion.types import Endianness, ResultType, TNumber
@@ -248,7 +247,9 @@ def validate_values_and_state(
         if isinstance(state, Tensor):
             if state is not None:
                 batch_size_state = (
-                    state.shape[0] if is_aquordion_shape(state, n_qubits=n_qubits) else state.size(-1)
+                    state.shape[0]
+                    if is_aquordion_shape(state, n_qubits=n_qubits)
+                    else state.size(-1)
                 )
                 batch_size_values = infer_batchsize(param_values)
                 if batch_size_state != batch_size_values and (

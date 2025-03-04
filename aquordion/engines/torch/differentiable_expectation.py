@@ -12,7 +12,14 @@ from torch.autograd import Function
 
 from aquordion.backend import Backend as QuantumBackend
 from aquordion.backend import ConvertedCircuit, ConvertedObservable
-from aquordion.backends.utils import infer_batchsize, is_pyq_shape, param_dict, pyqify, validate_state, promote_to_tensor
+from aquordion.backends.utils import (
+    infer_batchsize,
+    is_pyq_shape,
+    param_dict,
+    promote_to_tensor,
+    pyqify,
+    validate_state,
+)
 from aquordion.blocks.abstract import AbstractBlock
 from aquordion.blocks.utils import uuid_to_eigen
 from aquordion.circuit import QuantumCircuit
@@ -47,7 +54,7 @@ class PSRExpectation(Function):
                 exp_vals: list = []
                 for expectation_value in expectation_values:
                     res = list(
-                        map(lambda x: x.get_final_state().data.to_array(), expectation_value)
+                        map(lambda x: x.get_final_state().data.to_array(), expectation_value)  # type: ignore[no-any-return]
                     )
                     exp_vals.append(torch.tensor(res))
                 expectation_values = exp_vals
@@ -106,7 +113,6 @@ class DifferentiableExpectation:
             param_values=self.param_values,
             state=self.state,
             noise=self.noise,
-            mitigation=self.mitigation,
             endianness=self.endianness,
         )
         return promote_to_tensor(
@@ -155,27 +161,14 @@ class DifferentiableExpectation:
         self.observable = (
             self.observable if isinstance(self.observable, list) else [self.observable]
         )
-
-        if self.measurement is not None:
-            expectation_fn = partial(
-                self.measurement.get_measurement_fn(),
-                circuit=self.circuit.original,
-                observables=[obs.original for obs in self.observable],
-                options=self.measurement.options,
-                state=self.state,
-                noise=self.noise,
-                endianness=self.endianness,
-            )
-        else:
-            expectation_fn = partial(
-                self.backend.expectation,
-                circuit=self.circuit,
-                observable=self.observable,
-                state=self.state,
-                noise=self.noise,
-                mitigation=self.mitigation,
-                endianness=self.endianness,
-            )
+        expectation_fn = partial(
+            self.backend.expectation,
+            circuit=self.circuit,
+            observable=self.observable,
+            state=self.state,
+            noise=self.noise,
+            endianness=self.endianness,
+        )
         # PSR only applies to parametric circuits.
         if isinstance(self.observable, ConvertedObservable):
             self.observable = [self.observable]

@@ -2,12 +2,11 @@ from __future__ import annotations
 
 from functools import cached_property
 from logging import getLogger
+from math import log
 
 import numpy as np
 import torch
 from torch.linalg import eigvals
-
-from math import log
 
 from aquordion.blocks import PrimitiveBlock
 from aquordion.noise import NoiseHandler

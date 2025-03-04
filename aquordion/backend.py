@@ -250,7 +250,6 @@ class Backend(ABC):
             n_shots: Number of shots to sample.
             state: Initial state.
             noise: A noise model to use.
-            mitigation: An error mitigation protocol to apply.
             endianness: Endianness of the resulting bit strings.
         """
         raise NotImplementedError

@@ -7,14 +7,13 @@ import numpy as np
 import torch
 from torch import Tensor
 
-from aquordion.backend import BackendConfiguration
 from aquordion.blocks.abstract import AbstractBlock
 from aquordion.blocks.utils import chain, kron, tag
 from aquordion.circuit import QuantumCircuit
 from aquordion.divergences import js_divergence
 from aquordion.operations import SWAP, H, I, S
 from aquordion.transpile import reassign
-from aquordion.types import BackendName, DiffMode, OverlapMethod
+from aquordion.types import BackendName, OverlapMethod
 from aquordion.utils import P0, P1
 
 # Modules to be automatically added to the qadence namespace

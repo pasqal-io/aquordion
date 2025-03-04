@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from functools import singledispatch
 from typing import Any
 
@@ -6,14 +8,14 @@ from torch import Tensor, rand
 from aquordion.blocks import AbstractBlock, parameters
 from aquordion.circuit import QuantumCircuit
 from aquordion.parameters import Parameter, stringify
+
 __all__ = []  # type: ignore
 
 
 @singledispatch
-def rand_featureparameters(
-    x: QuantumCircuit | AbstractBlock, *args: Any
-) -> dict[str, Tensor]:
+def rand_featureparameters(x: QuantumCircuit | AbstractBlock, *args: Any) -> dict[str, Tensor]:
     raise NotImplementedError(f"Unable to generate random featureparameters for object {type(x)}.")
+
 
 @rand_featureparameters.register
 def _(block: AbstractBlock, batch_size: int = 1) -> dict[str, Tensor]:

@@ -49,7 +49,6 @@ class DifferentiableBackend(ABC):
             n_shots: The number of shots. Defaults to 1.
             state: Initial state.
             noise: A noise model to use.
-            mitigation: A mitigation protocol to apply to noisy samples.
             endianness: Endianness of the resulting bitstrings.
 
         Returns:
@@ -98,7 +97,6 @@ class DifferentiableBackend(ABC):
             measurement: Optional measurement protocol. If None, use
                 exact expectation value with a statevector simulator.
             noise: A noise model to use.
-            mitigation: The error mitigation to use.
             endianness: Endianness of the resulting bit strings.
         """
         raise NotImplementedError(

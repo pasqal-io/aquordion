@@ -51,7 +51,6 @@ class DifferentiableBackend(DifferentiableBackendInterface):
             measurement: Optional measurement protocol. If None, use
                 exact expectation value with a statevector simulator.
             noise: A noise model to use.
-            mitigation: The error mitigation to use.
             endianness: Endianness of the resulting bit strings.
         """
         observable = observable if isinstance(observable, list) else [observable]

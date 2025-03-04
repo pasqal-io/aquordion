@@ -153,7 +153,7 @@ class Backend(BackendInterface):
         native = pyq.Observable(operations=operations)
         return ConvertedObservable(native=native, abstract=block, original=observable)
 
-    def run(
+    def run(  # type: ignore[override]
         self,
         circuit: ConvertedCircuit,
         param_values: dict[str, Tensor] = {},
@@ -182,7 +182,6 @@ class Backend(BackendInterface):
         observable: list[ConvertedObservable] | ConvertedObservable,
         param_values: dict[str, Tensor] = {},
         state: Tensor | None = None,
-        measurement: Measurements | None = None,
         noise: NoiseHandler | None = None,
         endianness: Endianness = Endianness.BIG,
     ) -> Tensor:
@@ -208,7 +207,6 @@ class Backend(BackendInterface):
         observable: list[ConvertedObservable] | ConvertedObservable,
         param_values: dict[str, Tensor] = {},
         state: Tensor | None = None,
-        measurement: Measurements | None = None,
         noise: NoiseHandler | None = None,
         endianness: Endianness = Endianness.BIG,
     ) -> Tensor:

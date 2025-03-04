@@ -68,7 +68,7 @@ class Backend(BackendInterface):
         hq_obs = convert_observable(block, n_qubits=n_qubits, config=self.config)
         return ConvertedObservable(native=hq_obs, abstract=block, original=observable)
 
-    def run(
+    def run(  # type: ignore[override]
         self,
         circuit: ConvertedCircuit,
         param_values: ParamDictType = {},
@@ -168,7 +168,6 @@ class Backend(BackendInterface):
             n_shots: The number of samples to generate per distribution.
             state: The input state.
             noise: The Noise.
-            mitigation: Mitigation strategy.
             endianness (Endianness): The target endianness of the resulting samples.
 
         Returns:

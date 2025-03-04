@@ -7,10 +7,10 @@ from typing import Callable, List, Type, Union
 import numpy as np
 from torch import Tensor, double, ones, rand
 from typing_extensions import Any
-from aquordion.parameters import Parameter
 
 from aquordion.blocks import AbstractBlock, add, block_is_qubit_hamiltonian
-from aquordion.operations import N, X, Y, Z, H
+from aquordion.operations import N, X, Y, Z
+from aquordion.parameters import Parameter
 from aquordion.register import Register
 from aquordion.types import Interaction, TArray, TParameter
 

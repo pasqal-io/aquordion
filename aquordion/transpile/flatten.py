@@ -92,7 +92,7 @@ def _(block: AbstractBlock, types: list = [ChainBlock, KronBlock, AddBlock]) -> 
     if isinstance(block, CompositeBlock):
 
         def fn(b: AbstractBlock, T: Type) -> AbstractBlock:
-            return _construct(type(block), tuple(_flat_blocks(b, T))) # type: ignore[type-var]
+            return _construct(type(block), tuple(_flat_blocks(b, T)))  # type: ignore[type-var]
 
         return reduce(fn, types, block)  # type: ignore[arg-type]
     elif isinstance(block, ScaleBlock):
