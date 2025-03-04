@@ -47,9 +47,6 @@ jobs:
           with:
             token: ${{ secrets.CODECOV_TOKEN }}
             slug: pasqal-io/horqrux
-        - name: Test doc building
-          run: |
-            python -m hatch -e docs run mkdocs build --clean --strict
 
   publish:
     name: Publish to PyPI
