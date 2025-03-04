@@ -24,9 +24,20 @@ classifiers=[
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
+    "numpy",
+    "torch",
+    "sympy<1.13",
+    "sympytorch>=0.1.2",
+    "openfermion",
+    "deepdiff",
+    "rich",
+    "pyyaml",
+    "jsonschema",
     "pyqtorch==1.7.0",
     "horqrux==0.7.0",
-    "qadence",
+    "matplotlib",
+    "Arpeggio==2.0.2",
+    "sympy2jax",
 ]
 
 
@@ -64,7 +75,7 @@ serve = "mkdocs serve --dev-addr localhost:8000"
 
 [tool.ruff]
 select = ["E", "F", "I", "Q"]
-extend-ignore = ["F841","E741", "E743"]
+extend-ignore = ["F841", "F403", "E731", "E741", "E402"]
 line-length = 120
 
 [tool.ruff.isort]

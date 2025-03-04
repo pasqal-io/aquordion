@@ -28,7 +28,7 @@ body:
     attributes:
       label: Steps/Code to reproduce
       placeholder: |
-        from qadence import *
+        from aquordion import *
     validations:
       required: true
   - type: textarea
@@ -39,7 +39,7 @@ body:
     id: textenv
     attributes:
       label: Environment details (optional)
-      placeholder: Qadence version, Operating  system, Python version, PyTorch version
+      placeholder: aquordion version, Operating  system, Python version, PyTorch version
   - type: dropdown
     id: assign
     attributes:

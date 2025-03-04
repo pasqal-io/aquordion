@@ -7,14 +7,16 @@ from typing import Any, Callable, Set
 
 import hypothesis.strategies as st
 from hypothesis.strategies._internal import SearchStrategy
-from qadence.blocks import (
+from sympy import Basic, Expr, acos, asin, atan, cos, sin, tan
+
+from aquordion.blocks import (
     AbstractBlock,
     ParametricBlock,
     chain,
 )
-from qadence.circuit import QuantumCircuit
-from qadence.extensions import supported_gates
-from qadence.operations import (
+from aquordion.circuit import QuantumCircuit
+from aquordion.extensions import supported_gates
+from aquordion.operations import (
     analog_gateset,
     multi_qubit_gateset,
     non_unitary_gateset,
@@ -22,9 +24,8 @@ from qadence.operations import (
     three_qubit_gateset,
     two_qubit_gateset,
 )
-from qadence.parameters import FeatureParameter, Parameter, VariationalParameter
-from qadence.types import PI, BackendName, ParameterType, TNumber
-from sympy import Basic, Expr, acos, asin, atan, cos, sin, tan
+from aquordion.parameters import FeatureParameter, Parameter, VariationalParameter
+from aquordion.types import PI, BackendName, ParameterType, TNumber
 
 PARAM_NAME_LENGTH = 1
 MIN_SYMBOLS = 1

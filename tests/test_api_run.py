@@ -3,13 +3,14 @@ from __future__ import annotations
 import pytest
 import strategies as st
 from hypothesis import given, settings
-from qadence import QuantumCircuit
-from qadence.backends.api import backend_factory
-from qadence.backends.jax_utils import jarr_to_tensor, tensor_to_jnp
-from qadence.ml_tools.utils import rand_featureparameters
-from qadence.states import equivalent_state
-from qadence.types import BackendName
 from strategies import BACKENDS
+
+from aquordion import QuantumCircuit
+from aquordion.backends.api import backend_factory
+from aquordion.backends.jax_utils import jarr_to_tensor, tensor_to_jnp
+from aquordion.states import equivalent_state
+from aquordion.types import BackendName
+from aquordion.utils_parameters import rand_featureparameters
 
 ATOL_32 = 1e-07  # 32 bit precision
 ATOL_DICT = {
