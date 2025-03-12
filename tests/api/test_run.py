@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import pytest
-import strategies as st
+import tests.strategies as st
 from hypothesis import given, settings
-from strategies import BACKENDS
+from tests.strategies import BACKENDS
 
 from aquordion import QuantumCircuit
 from aquordion.backends.api import backend_factory
@@ -12,11 +12,7 @@ from aquordion.states import equivalent_state
 from aquordion.types import BackendName
 from aquordion.utils_parameters import rand_featureparameters
 
-ATOL_32 = 1e-07  # 32 bit precision
-ATOL_DICT = {
-    BackendName.PYQTORCH: ATOL_32,
-    BackendName.HORQRUX: ATOL_32,
-}
+from tests.api.tols import ATOL_DICT
 
 
 @given(st.restricted_circuits())

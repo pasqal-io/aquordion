@@ -12,7 +12,9 @@ from sympy import Basic, Expr, acos, asin, atan, cos, sin, tan
 from aquordion.blocks import (
     AbstractBlock,
     ParametricBlock,
+    add,
     chain,
+    kron,
 )
 from aquordion.circuit import QuantumCircuit
 from aquordion.extensions import supported_gates
@@ -20,6 +22,7 @@ from aquordion.operations import (
     analog_gateset,
     multi_qubit_gateset,
     non_unitary_gateset,
+    pauli_gateset,
     single_qubit_gateset,
     three_qubit_gateset,
     two_qubit_gateset,
@@ -220,3 +223,26 @@ def restricted_circuits(
     block = draw(rand_digital_blocks(minimal_gateset)(n_qubits, depth))
     total_qubits = max(block.qubit_support) + 1
     return QuantumCircuit(total_qubits, block)
+
+
+# A strategy to generate random observables under the form
+# of an add block of numerically scaled kron blocks.
+@st.composite
+def observables(
+    draw: Callable[[SearchStrategy[Any]], Any],
+    n_qubits: SearchStrategy[int] = N_QUBITS_STRATEGY,
+    depth: SearchStrategy[int] = CIRCUIT_DEPTH_STRATEGY,
+) -> AbstractBlock:
+    total_qubits = draw(n_qubits)
+    add_layer = []
+    for _ in range(draw(depth)):
+        kron_layer = []
+        for qubit in range(draw(st.integers(min_value=1, max_value=total_qubits))):
+            gate = draw(st.sampled_from(pauli_gateset))
+            kron_layer.append(gate(qubit))
+        scale = draw(st.floats(min_value=-10.0, max_value=10.0))
+        kron_block = scale * kron(*kron_layer)
+        add_layer.append(kron_block)
+    scale_add: float = draw(st.floats(min_value=-10.0, max_value=10.0))
+    add_block = scale_add * add(*add_layer)
+    return add_block
