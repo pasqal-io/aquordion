@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import pytest
-import tests.strategies as st
+import strategies as st
 from hypothesis import given, settings
-from tests.strategies import BACKENDS
+from tols import ATOL_DICT
 
 from aquordion import QuantumCircuit
 from aquordion.backends.api import backend_factory
@@ -12,12 +12,10 @@ from aquordion.states import equivalent_state
 from aquordion.types import BackendName
 from aquordion.utils_parameters import rand_featureparameters
 
-from tests.api.tols import ATOL_DICT
-
 
 @given(st.restricted_circuits())
 @settings(deadline=None)
-@pytest.mark.parametrize("backend", BACKENDS)
+@pytest.mark.parametrize("backend", st.BACKENDS)
 def test_run_for_random_circuit(backend: BackendName, circuit: QuantumCircuit) -> None:
     cfg = {"_use_gate_params": True}
     inputs = rand_featureparameters(circuit, 1)

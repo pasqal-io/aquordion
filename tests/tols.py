@@ -1,4 +1,5 @@
 from __future__ import annotations
+
 from aquordion.types import BackendName
 
 ATOL_32 = 1e-07  # 32 bit precision
