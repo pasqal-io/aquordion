@@ -1,5 +1,7 @@
 from __future__ import annotations
+
 from enum import Enum
+
 
 class StrEnum(str, Enum):
     def __str__(self) -> str:
@@ -10,6 +12,7 @@ class StrEnum(str, Enum):
     @classmethod
     def list(cls) -> list[str]:
         return list(map(lambda c: c.value, cls))  # type: ignore
+
 
 class _BackendName(StrEnum):
     """The available backends for running circuits."""

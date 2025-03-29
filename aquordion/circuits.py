@@ -9,7 +9,7 @@ def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[st
     for j in range(n_layers):
         for i in range(n_qubits):
             ops += [RX(i, f"theta_{j}_{i}_0"), RZ(i, f"theta_{j}_{i}_1")]
-            params += [f"theta_{j}_{i}_0",f"theta_{j}_{i}_1" ]
+            params += [f"theta_{j}_{i}_0", f"theta_{j}_{i}_1"]
 
     circ = QuantumCircuit(n_qubits, ops)
     return circ, params
@@ -39,12 +39,12 @@ def circuit_C(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[st
     for j in range(n_layers):
         for i in range(n_qubits):
             ops += [RY(i, f"theta_{j}_{i}_0"), RZ(i, f"theta_{j}_{i}_1")]
-            params += [f"theta_{j}_{i}_0",f"theta_{j}_{i}_1" ]
+            params += [f"theta_{j}_{i}_0", f"theta_{j}_{i}_1"]
         ops += entangler
 
     for i in range(n_qubits):
         ops += [RY(i, f"theta_{n_layers}_{i}_0"), RZ(i, f"theta_{n_layers}_{i}_1")]
-        params += [f"theta_{n_layers}_{i}_0",f"theta_{n_layers}_{i}_1" ]
+        params += [f"theta_{n_layers}_{i}_0", f"theta_{n_layers}_{i}_1"]
 
     circ = QuantumCircuit(n_qubits, ops)
     return circ, params

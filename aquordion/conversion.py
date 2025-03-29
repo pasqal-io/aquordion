@@ -2,23 +2,18 @@ from __future__ import annotations
 
 from typing import Any
 
-from torch import Tensor, cdouble, from_numpy
-
-import pyqtorch as pyq
 import horqrux
-from horqrux.primitives.primitive import Primitive
-
-
-from jax import Array, device_get
 import jax.numpy as jnp
-
+import pyqtorch as pyq
+from jax import Array, device_get
+from torch import Tensor, cdouble, from_numpy
 
 pyq_to_horqrux_types_match = {
     pyq.RX: horqrux.RX,
     pyq.RY: horqrux.RY,
     pyq.RZ: horqrux.RZ,
     pyq.CNOT: horqrux.NOT,
-    pyq.H: horqrux.H
+    pyq.H: horqrux.H,
 }
 
 
@@ -26,8 +21,8 @@ def pyq_to_horqrux(qc: pyq.QuantumCircuit) -> horqrux.QuantumCircuit:
     horqrux_ops = list()
     for op in qc.flatten():
         call_op = pyq_to_horqrux_types_match[type(op)]
-        if isinstance(op, pyq.primitives.Parametric): 
-        
+        if isinstance(op, pyq.primitives.Parametric):
+
             horqrux_ops.append(call_op(target=op.target, control=op.control, param=op.param_name))
         else:
             horqrux_ops.append(call_op(target=op.target, control=op.control))

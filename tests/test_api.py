@@ -3,13 +3,13 @@ from __future__ import annotations
 import random
 from typing import Callable
 
+import pyqtorch as pyq
 import pytest
 import torch
 
-import pyqtorch as pyq
-
 from aquordion.circuits import circuit_A, circuit_B, circuit_C
-from aquordion.conversion import pyq_to_horqrux, tensor_to_jnp, values_to_jax, jarr_to_tensor
+from aquordion.conversion import jarr_to_tensor, pyq_to_horqrux, tensor_to_jnp, values_to_jax
+
 
 @pytest.mark.parametrize("fn_circuit", [circuit_A, circuit_B, circuit_C])
 def test_run_circuits(fn_circuit: Callable) -> None:
@@ -26,4 +26,3 @@ def test_run_circuits(fn_circuit: Callable) -> None:
     horqrux_output = jarr_to_tensor(jax_circ(tensor_to_jnp(state), values_to_jax(values)))
 
     assert torch.allclose(horqrux_output, pyq_output)
-
