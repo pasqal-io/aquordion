@@ -14,10 +14,11 @@ pyq_to_horqrux_types_match = {
     pyq.RZ: horqrux.RZ,
     pyq.CNOT: horqrux.NOT,
     pyq.H: horqrux.H,
+    pyq.CZ: horqrux.Z,
 }
 
 
-def pyq_to_horqrux(qc: pyq.QuantumCircuit) -> horqrux.QuantumCircuit:
+def pyqcircuit_to_horqrux(qc: pyq.QuantumCircuit) -> horqrux.QuantumCircuit:
     horqrux_ops = list()
     for op in qc.flatten():
         call_op = pyq_to_horqrux_types_match[type(op)]
