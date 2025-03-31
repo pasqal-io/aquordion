@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from enum import Enum
 from typing import Union
+
 import numpy as np
 
 TNumber = Union[int, float, complex, np.int64, np.float64]
@@ -26,6 +27,7 @@ class _BackendName(StrEnum):
     HORQRUX = "horqrux"
     """The horqrux backend."""
 
+
 class ParameterType(StrEnum):
     """Parameter types available in qadence."""
 
@@ -33,4 +35,3 @@ class ParameterType(StrEnum):
     """VariationalParameters are trainable."""
     FIXED = "Fixed"
     """Fixed/ constant parameters are neither trainable nor act as input."""
-
