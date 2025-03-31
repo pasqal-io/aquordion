@@ -1,6 +1,10 @@
 from __future__ import annotations
 
 from enum import Enum
+from typing import Union
+import numpy as np
+
+TNumber = Union[int, float, complex, np.int64, np.float64]
 
 
 class StrEnum(str, Enum):
@@ -21,3 +25,12 @@ class _BackendName(StrEnum):
     """The Pyqtorch backend."""
     HORQRUX = "horqrux"
     """The horqrux backend."""
+
+class ParameterType(StrEnum):
+    """Parameter types available in qadence."""
+
+    VARIATIONAL = "Variational"
+    """VariationalParameters are trainable."""
+    FIXED = "Fixed"
+    """Fixed/ constant parameters are neither trainable nor act as input."""
+

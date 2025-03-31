@@ -14,7 +14,17 @@ pyq_to_horqrux_types_match = {
     pyq.RZ: horqrux.RZ,
     pyq.CNOT: horqrux.NOT,
     pyq.H: horqrux.H,
+    pyq.Z: horqrux.Z,
+    pyq.NOT: horqrux.X,
+    pyq.Y: horqrux.Y,
     pyq.CZ: horqrux.Z,
+    pyq.CNOT: horqrux.X,
+    pyq.CY: horqrux.Y,
+    pyq.I: horqrux.I,
+    pyq.H: horqrux.H,
+    pyq.S: horqrux.S,
+    pyq.T: horqrux.T,
+    pyq.SWAP: horqrux.SWAP,
 }
 
 
