@@ -12,10 +12,9 @@ pyq_to_horqrux_types_match = {
     pyq.RX: horqrux.RX,
     pyq.RY: horqrux.RY,
     pyq.RZ: horqrux.RZ,
-    pyq.CNOT: horqrux.NOT,
     pyq.H: horqrux.H,
     pyq.Z: horqrux.Z,
-    pyq.NOT: horqrux.X,
+    pyq.X: horqrux.X,
     pyq.Y: horqrux.Y,
     pyq.CZ: horqrux.Z,
     pyq.CNOT: horqrux.X,
@@ -24,7 +23,6 @@ pyq_to_horqrux_types_match = {
     pyq.H: horqrux.H,
     pyq.S: horqrux.S,
     pyq.T: horqrux.T,
-    pyq.SWAP: horqrux.SWAP,
 }
 
 
@@ -33,8 +31,10 @@ def pyqcircuit_to_horqrux(qc: pyq.QuantumCircuit) -> horqrux.QuantumCircuit:
     for op in qc.flatten():
         call_op = pyq_to_horqrux_types_match[type(op)]
         if isinstance(op, pyq.primitives.Parametric):
-
-            horqrux_ops.append(call_op(target=op.target, control=op.control, param=op.param_name))
+            param = (
+                op.param_name if isinstance(op.param_name, str) else tensor_to_jnp(op.param_name)
+            )
+            horqrux_ops.append(call_op(target=op.target, control=op.control, param=param))
         else:
             horqrux_ops.append(call_op(target=op.target, control=op.control))
     return horqrux.QuantumCircuit(qc.n_qubits, horqrux_ops)

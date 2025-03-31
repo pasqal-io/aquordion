@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from pyqtorch import QuantumCircuit
 
+
 def extract_parameters(circuit: QuantumCircuit) -> tuple[str, ...]:
     """Extract string parameter names out of a circuit.
 
