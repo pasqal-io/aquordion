@@ -4,6 +4,7 @@ from qadence import CNOT, MCZ, RX, RY, RZ, H, QuantumCircuit, chain
 
 
 def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:
+    """A simple circuit structure without entangling layers coming from https://arxiv.org/pdf/2009.02823.pdf"""
     ops = []
     params = []
     for j in range(n_layers):
@@ -16,6 +17,7 @@ def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[st
 
 
 def circuit_B(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:
+    """A circuit structure with CZ entangling layers coming from https://arxiv.org/pdf/2009.02823.pdf"""
     ops = []
     params = []
     entangler = [MCZ((i,), i + 1) for i in range(n_qubits - 1)]
@@ -32,6 +34,7 @@ def circuit_B(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[st
 
 
 def circuit_C(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:
+    """A circuit structure with CNOT entangling layers coming from https://arxiv.org/pdf/2009.02823.pdf"""
     ops = []
     params = []
     entangler = [CNOT(i, i + 1) for i in range(n_qubits - 1)]
