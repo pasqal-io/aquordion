@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from pyqtorch import CNOT, CZ, RX, RY, RZ, H, QuantumCircuit
+from qadence import CNOT, CZ, RX, RY, RZ, H, QuantumCircuit
 
 
 def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:

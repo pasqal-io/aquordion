@@ -1,6 +1,3 @@
 from __future__ import annotations
 
-from .circuits import circuit_A, circuit_B, circuit_C
-from .conversion import jarr_to_tensor, pyqcircuit_to_horqrux, tensor_to_jnp, values_to_jax
-from .types import _BackendName
-from .utils import extract_parameters
+from .benchmarks_circuits import circuit_A, circuit_B, circuit_C
