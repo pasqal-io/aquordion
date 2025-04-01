@@ -25,7 +25,7 @@ classifiers=[
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-    "qadence==1.11.1",
+    "qadence[horqrux]==1.11.1",
 ]
 
 
