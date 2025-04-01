@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from typing import Callable
+import pytest
+import random
 from qadence import CNOT, MCZ, RX, RY, RZ, H, QuantumCircuit, chain
 
 
@@ -51,3 +54,17 @@ def circuit_C(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[st
 
     circ = QuantumCircuit(n_qubits, chain(*ops))
     return circ, params
+
+@pytest.fixture
+def random_circuit_integers() -> tuple[int, int]:
+    n_qubits = random.randint(1, 5)
+    n_layers = random.randint(1, 5)
+    return n_qubits, n_layers
+
+@pytest.fixture(params=[
+    circuit_A,
+    circuit_B, 
+    circuit_C,
+], ids=["circuit_A", "circuit_B", "circuit_C"])
+def fn_circuit(request) -> Callable: # type: ignore[no-untyped-def]
+    return request.param # type: ignore[no-any-return]

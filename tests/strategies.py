@@ -5,6 +5,7 @@ from functools import reduce
 from typing import Any, Callable, Set
 
 import hypothesis.strategies as st
+from conftest import circuit_A, circuit_B, circuit_C
 from hypothesis.strategies._internal import SearchStrategy
 from qadence.blocks import (
     AbstractBlock,
@@ -241,3 +242,15 @@ def observables(
     scale_add: float = draw(st.floats(min_value=-10.0, max_value=10.0))
     add_block = scale_add * add(*add_layer)
     return add_block
+
+
+@st.composite
+def ansatz(
+    draw: Callable[[SearchStrategy[Any]], Any],
+    n_qubits: SearchStrategy[int] = N_QUBITS_STRATEGY,
+    depth: SearchStrategy[int] = CIRCUIT_DEPTH_STRATEGY,
+) -> tuple[QuantumCircuit, list[str]]:
+    total_qubits = draw(n_qubits)
+    total_layers = draw(depth)
+    circuit_fn = [circuit_A, circuit_B, circuit_C][draw(st.integers(min_value=0, max_value=2))]
+    return circuit_fn(total_qubits, total_layers)  # type: ignore[no-any-return]
