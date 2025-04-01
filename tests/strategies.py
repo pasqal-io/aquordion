@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import random
 import string
 from functools import reduce
 from typing import Any, Callable, Set
@@ -29,7 +28,7 @@ from qadence.parameters import FeatureParameter, Parameter, VariationalParameter
 from qadence.types import PI, BackendName, ParameterType, TNumber
 from sympy import Basic, Expr, acos, asin, atan, cos, sin, tan
 
-PARAM_NAME_LENGTH = 1
+PARAM_NAME_LENGTH = 10
 MIN_SYMBOLS = 1
 MAX_SYMBOLS = 3
 FEAT_PARAM_MIN = -1.0
@@ -84,19 +83,16 @@ def get_param(
     name_len: int,
     value: TNumber,
 ) -> Basic:
-    def rand_name(length: int) -> str:
-        letters = string.ascii_letters
-        result_str = "".join(random.choice(letters) for i in range(length))
-        return result_str
+    letters = string.ascii_letters
 
     p: Basic
     if param_type == ParameterType.FEATURE:
-        p = FeatureParameter(rand_name(name_len), value=value)
+        p = FeatureParameter(draw(st.text(alphabet=letters, max_size=name_len)), value=value)
         with_trig: SearchStrategy[bool] = st.booleans()
         if draw(with_trig):
             p = draw(st.sampled_from(TRIG_FNS))(p)
     elif param_type == ParameterType.VARIATIONAL:
-        p = VariationalParameter(rand_name(name_len), value=value)
+        p = VariationalParameter(draw(st.text(alphabet=letters, max_size=name_len)), value=value)
     else:
         p = Parameter(value)
     return p
