@@ -8,7 +8,7 @@ from qadence.backends.jax_utils import jarr_to_tensor
 from qadence.ml_tools.utils import rand_featureparameters
 from qadence.states import equivalent_state
 
-from aquordion.benchmark_api import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
+from aquordion.benchmarks import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
 from aquordion.utils import values_to_jnp
 
 ATOL_32 = 1e-07  # 32 bit precision
