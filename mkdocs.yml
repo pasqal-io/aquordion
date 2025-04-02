@@ -5,6 +5,7 @@ repo_name: "aquordion"
 nav:
 
   - aquordion in a Nutshell: index.md
+  - Benchmarks: benchmarks.md
 
 
 theme:
