@@ -20,13 +20,11 @@ classifiers=[
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: Implementation :: CPython",
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-    "pyqtorch==1.7.4",
-    "horqrux==0.7.1",
+    "qadence[horqrux]==1.11.1",
 ]
 
 
