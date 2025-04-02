@@ -42,11 +42,10 @@ jobs:
         - name: Perform unit tests
           run: |
             python -m hatch -e tests run test
-        - name: Upload coverage reports to Codecov
-          uses: codecov/codecov-action@v5
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            slug: pasqal-io/horqrux
+        - name: Test doc building
+          run: |
+            python -m hatch -e docs run mkdocs build --clean --strict
+
 
   publish:
     name: Publish to PyPI
@@ -74,7 +73,7 @@ jobs:
         timeout-minutes: 5
         run: |
           VERSION=${GITHUB_REF#refs/tags/v}
-          until pip download horqrux==$VERSION
+          until pip download aquordion==$VERSION
           do
             echo "Failed to download from PyPI, will wait for upload and retry."
             sleep 1

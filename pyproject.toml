@@ -29,7 +29,7 @@ dependencies = [
 
 
 [project.optional-dependencies]
-dev = ["black", "pytest", "pytest-xdist", "pytest-cov", "flake8", "mypy", "pre-commit", "ruff", "hypothesis",]
+dev = ["black", "pytest", "pytest-xdist", "pytest-cov", "flake8", "mypy", "pre-commit", "ruff", "hypothesis", "pytest-benchmark"]
 
 [tool.hatch.envs.default]
 installer = "uv"
@@ -64,6 +64,7 @@ packages = ["aquordion"]
 [tool.hatch.envs.docs.scripts]
 build = "mkdocs build --clean --strict"
 serve = "mkdocs serve --dev-addr localhost:8000"
+test = "mkdocs build --clean --strict"
 
 [tool.ruff]
 select = ["E", "F", "I", "Q"]
