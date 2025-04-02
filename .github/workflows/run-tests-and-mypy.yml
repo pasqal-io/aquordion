@@ -42,6 +42,9 @@ jobs:
         - name: Perform unit tests
           run: |
             python -m hatch -e tests run test
+        - name: Perform benchmarks
+          run: |
+            python -m hatch -e tests run benchmarks
         - name: Test doc building
           run: |
             python -m hatch -e docs run mkdocs build --clean --strict
