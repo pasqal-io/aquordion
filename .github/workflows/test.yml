@@ -39,7 +39,7 @@ jobs:
         - name: Perform unit tests
           run: |
             python -m hatch -e tests run test
-  
+
   test_benchmarks:
     name: Benchmarks
     runs-on: ubuntu-latest
