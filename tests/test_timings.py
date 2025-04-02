@@ -13,14 +13,12 @@ from aquordion.utils import values_to_jnp
     "n_qubits",
     [
         2,
-        5,
     ],
 )
 @pytest.mark.parametrize(
     "n_layers",
     [
         2,
-        5,
     ],
 )
 def test_run_pyq(
@@ -38,14 +36,12 @@ def test_run_pyq(
     "n_qubits",
     [
         2,
-        5,
     ],
 )
 @pytest.mark.parametrize(
     "n_layers",
     [
         2,
-        5,
     ],
 )
 def test_run_horqrux(

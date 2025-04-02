@@ -62,6 +62,19 @@ jobs:
         - name: Perform benchmarks
           run: |
             python -m hatch -e tests run benchmarks
+        - name: Store benchmark result
+          uses: benchmark-action/github-action-benchmark@v1
+          with:
+            name: Python Benchmark with pytest-benchmark
+            tool: 'pytest'
+            output-file-path: docs/stats.json
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            auto-push: true
+            # Show alert with commit comment on detecting possible performance regression
+            alert-threshold: '200%'
+            comment-on-alert: true
+            fail-on-alert: true
+            alert-comment-cc-users: '@chMoussa'
 
   test_docs:
     name: Documentation
