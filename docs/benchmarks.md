@@ -23,6 +23,26 @@ frame['fn_circuit'] = frame['fn_circuit'].apply(lambda x: re.findall('function (
 ```python exec="on" source="material-block" session="benchmarks"
 
 run_frame = frame[frame['name'].str.startswith('run')] # markdown-exec: hide
+run_frame['name'] = run_frame['name'].str.replace('run_', '') # markdown-exec: hide
+
+axes = frame.boxplot('median', by=['name', 'fn_circuit']) # markdown-exec: hide
+axes.set_title('Timing distributions by test and circuit') # markdown-exec: hide
+axes.set_xlabel('') # markdown-exec: hide
+axes.set_ylabel('Time (s)') # markdown-exec: hide
+axes.set_yscale('log') # markdown-exec: hide
+plt.xticks(rotation=75) # markdown-exec: hide
+plt.suptitle('') # markdown-exec: hide
+plt.show() # markdown-exec: hide
+
+```
+
+## Expectation method: Z(0) observable
+
+
+```python exec="on" source="material-block" session="benchmarks"
+
+expectation_frame = frame[frame['name'].str.startswith('expectation')] # markdown-exec: hide
+expectation_frame['name'] = expectation_frame['name'].str.replace('expectation_', '') # markdown-exec: hide
 axes = frame.boxplot('median', by=['name', 'fn_circuit']) # markdown-exec: hide
 axes.set_title('Timing distributions by test and circuit') # markdown-exec: hide
 axes.set_xlabel('') # markdown-exec: hide
