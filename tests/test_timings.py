@@ -29,7 +29,7 @@ def test_run_pyq(
     torch.manual_seed(0)
     inputs = {p: torch.rand(1) for p in params}
 
-    benchmark(run_pyq, circuit, inputs)
+    benchmark.pedantic(run_pyq, args=(circuit, inputs), rounds=10)
 
 
 @pytest.mark.parametrize(
@@ -53,4 +53,4 @@ def test_run_horqrux(
     inputs = {p: torch.rand(1) for p in params}
 
     jnp_inputs = values_to_jnp(inputs)
-    benchmark(run_horqrux, circuit, jnp_inputs)
+    benchmark.pedantic(run_horqrux, args=(circuit, jnp_inputs), rounds=10)
