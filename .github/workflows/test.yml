@@ -93,7 +93,6 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: stats
-            path: docs/stats.json
         - name: Test docs
           run: |
             python -m hatch -e docs run mkdocs build --clean --strict
