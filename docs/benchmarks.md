@@ -1,3 +1,3 @@
 # Last stats
 
-![Stats](stats.svg)
+![Stats](stats.json)
