@@ -9,28 +9,10 @@ from qadence import Z
 from aquordion.benchmarks import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
 from aquordion.utils import values_to_jnp
 
-N_qubits_list = [
-    2,
-    5,
-    10,
-    15,
-]
 
-N_layers_list = [2, 5]
-
-
-@pytest.mark.parametrize(
-    "n_qubits",
-    N_qubits_list,
-)
-@pytest.mark.parametrize(
-    "n_layers",
-    N_layers_list,
-)
-def test_run_pyq(
-    benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
-) -> None:
-
+def test_run_pyq(benchmark: pytest.Fixture, benchmark_circuit: tuple[Callable, int, int]) -> None:
+    print(benchmark_circuit)
+    fn_circuit, n_qubits, n_layers = benchmark_circuit
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
     inputs = {p: torch.rand(1) for p in params}
@@ -38,18 +20,10 @@ def test_run_pyq(
     benchmark.pedantic(run_pyq, args=(circuit, inputs), rounds=10)
 
 
-@pytest.mark.parametrize(
-    "n_qubits",
-    N_qubits_list,
-)
-@pytest.mark.parametrize(
-    "n_layers",
-    N_layers_list,
-)
 def test_run_horqrux(
-    benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
+    benchmark: pytest.Fixture, benchmark_circuit: tuple[Callable, int, int]
 ) -> None:
-
+    fn_circuit, n_qubits, n_layers = benchmark_circuit
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
     inputs = {p: torch.rand(1) for p in params}
@@ -58,18 +32,10 @@ def test_run_horqrux(
     benchmark.pedantic(run_horqrux, args=(circuit, jnp_inputs), rounds=10)
 
 
-@pytest.mark.parametrize(
-    "n_qubits",
-    N_qubits_list,
-)
-@pytest.mark.parametrize(
-    "n_layers",
-    N_layers_list,
-)
 def test_expectation_pyq(
-    benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
+    benchmark: pytest.Fixture, benchmark_circuit: tuple[Callable, int, int]
 ) -> None:
-
+    fn_circuit, n_qubits, n_layers = benchmark_circuit
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
     inputs = {p: torch.rand(1) for p in params}
@@ -78,18 +44,10 @@ def test_expectation_pyq(
     benchmark.pedantic(expectation_pyq, args=(circuit, observable, inputs), rounds=10)
 
 
-@pytest.mark.parametrize(
-    "n_qubits",
-    N_qubits_list,
-)
-@pytest.mark.parametrize(
-    "n_layers",
-    N_layers_list,
-)
 def test_expectation_horqrux(
-    benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
+    benchmark: pytest.Fixture, benchmark_circuit: tuple[Callable, int, int]
 ) -> None:
-
+    fn_circuit, n_qubits, n_layers = benchmark_circuit
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
     inputs = {p: torch.rand(1) for p in params}

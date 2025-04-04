@@ -18,6 +18,7 @@ data_stats = [{'name': x['name']} | x['params'] | x['stats'] for x in data] # ma
 
 frame = pd.DataFrame(data_stats) # markdown-exec: hide
 frame['name'] = frame['name'].apply(lambda x: re.findall('test_(.*)\\[', x)[0]) # markdown-exec: hide
+frame['fn_circuit'] = frame['benchmark_circuit'].apply(str)
 frame['fn_circuit'] = frame['fn_circuit'].apply(lambda x: re.findall('function (.*) at', x)[0]) # markdown-exec: hide
 
 ```
