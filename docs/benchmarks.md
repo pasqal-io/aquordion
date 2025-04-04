@@ -1,4 +1,8 @@
-# Last stats
+# Stats
+
+We generate time stats using `pytest-benchmark` using $10$ rounds for circuits A, B, C coming from  [^1].
+The current execution times are for circuits defined over $2$ qubits and $2$ layers.
+So far, we benchmark between `PyQTorch` and `Horqrux` the `run` and `expectation` methods.
 
 ```python exec="on" source="material-block" session="benchmarks"
 
@@ -20,6 +24,8 @@ frame['fn_circuit'] = frame['fn_circuit'].apply(lambda x: re.findall('function (
 
 ## Run method
 
+Here are the median execution times for the `run` method over a random state.
+
 ```python exec="on" source="material-block" session="benchmarks"
 
 run_frame = frame[frame['name'].str.startswith('run')] # markdown-exec: hide
@@ -38,6 +44,7 @@ plt.show() # markdown-exec: hide
 
 ## Expectation method: Z(0) observable
 
+Here are the median execution times for the `expectation` method over a random state and the $Z(0)$ observable.
 
 ```python exec="on" source="material-block" session="benchmarks"
 
@@ -53,3 +60,5 @@ plt.suptitle('') # markdown-exec: hide
 plt.show() # markdown-exec: hide
 
 ```
+
+[^1]: [Tyson Jones, Julien Gacon, Efficient calculation of gradients in classical simulations of variational quantum algorithms (2020)](https://arxiv.org/abs/2111.05176)

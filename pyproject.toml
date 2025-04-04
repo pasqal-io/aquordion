@@ -41,8 +41,8 @@ features = [
 ]
 
 [tool.hatch.envs.tests.scripts]
-test = "pytest -n auto --cov-report=xml --cov-config=pyproject.toml --cov=aquordion --cov=tests --ignore=tests/test_timings.py {args}"
-benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s --cov-report=xml --cov-config=pyproject.toml --cov=aquordion --cov=tests tests/test_timings.py"
+test = "pytest -n auto --ignore=tests/test_timings.py {args}"
+benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s tests/test_timings.py"
 
 [tool.hatch.envs.docs]
 installer = "uv"
