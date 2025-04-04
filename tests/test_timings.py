@@ -9,18 +9,23 @@ from qadence import Z
 from aquordion.benchmarks import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
 from aquordion.utils import values_to_jnp
 
+N_qubits_list = [
+    2,
+    5,
+    10,
+    15,
+]
+
+N_layers_list = [2, 5]
+
 
 @pytest.mark.parametrize(
     "n_qubits",
-    [
-        2,
-    ],
+    N_qubits_list,
 )
 @pytest.mark.parametrize(
     "n_layers",
-    [
-        2,
-    ],
+    N_layers_list,
 )
 def test_run_pyq(
     benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
@@ -35,15 +40,11 @@ def test_run_pyq(
 
 @pytest.mark.parametrize(
     "n_qubits",
-    [
-        2,
-    ],
+    N_qubits_list,
 )
 @pytest.mark.parametrize(
     "n_layers",
-    [
-        2,
-    ],
+    N_layers_list,
 )
 def test_run_horqrux(
     benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
@@ -59,15 +60,11 @@ def test_run_horqrux(
 
 @pytest.mark.parametrize(
     "n_qubits",
-    [
-        2,
-    ],
+    N_qubits_list,
 )
 @pytest.mark.parametrize(
     "n_layers",
-    [
-        2,
-    ],
+    N_layers_list,
 )
 def test_expectation_pyq(
     benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
@@ -83,15 +80,11 @@ def test_expectation_pyq(
 
 @pytest.mark.parametrize(
     "n_qubits",
-    [
-        2,
-    ],
+    N_qubits_list,
 )
 @pytest.mark.parametrize(
     "n_layers",
-    [
-        2,
-    ],
+    N_layers_list,
 )
 def test_expectation_horqrux(
     benchmark: pytest.Fixture, fn_circuit: Callable, n_qubits: int, n_layers: int
