@@ -1,7 +1,7 @@
 # Stats
 
 We generate time stats using `pytest-benchmark` using $10$ rounds for circuits A, B, C coming from  [^1].
-The current execution times are for circuits defined over $2$ qubits and $2$ layers.
+The current execution times are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers.
 So far, we benchmark between `PyQTorch` and `Horqrux` the `run` and `expectation` methods.
 
 ```python exec="on" source="material-block" session="benchmarks"
