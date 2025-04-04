@@ -9,6 +9,10 @@ __pycache__/
 .DS_Store
 aquordion/.DS_Store
 
+# docs
+docs/stats.json
+docs/stats.svg
+
 # Distribution / packaging
 .Python
 build/

@@ -29,7 +29,7 @@ dependencies = [
 
 
 [project.optional-dependencies]
-dev = ["black", "pytest", "pytest-xdist", "pytest-cov", "flake8", "mypy", "pre-commit", "ruff", "hypothesis",]
+dev = ["black", "pytest", "pytest-xdist", "pytest-cov", "flake8", "mypy", "pre-commit", "ruff", "hypothesis", "pytest-benchmark[histogram]"]
 
 [tool.hatch.envs.default]
 installer = "uv"
@@ -41,7 +41,8 @@ features = [
 ]
 
 [tool.hatch.envs.tests.scripts]
-test = "pytest -n auto --cov-report=xml --cov-config=pyproject.toml --cov=aquordion --cov=tests {args}"
+test = "pytest -n auto --ignore=tests/test_timings.py {args}"
+benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s tests/test_timings.py"
 
 [tool.hatch.envs.docs]
 installer = "uv"
@@ -56,6 +57,7 @@ dependencies = [
   "markdown-exec",
   "mike",
   "matplotlib",
+  "pandas",
 ]
 
 [tool.hatch.build.targets.wheel]

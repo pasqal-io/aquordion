@@ -1,10 +1,20 @@
 from __future__ import annotations
 
+import itertools
 import random
 from typing import Callable
 
 import pytest
 from qadence import CNOT, MCZ, RX, RY, RZ, H, QuantumCircuit, chain
+
+N_qubits_list = [
+    2,
+    5,
+    10,
+    15,
+]
+
+N_layers_list = [2, 5]
 
 
 def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:
@@ -73,4 +83,28 @@ def random_circuit_integers() -> tuple[int, int]:
     ids=["circuit_A", "circuit_B", "circuit_C"],
 )
 def fn_circuit(request) -> Callable:  # type: ignore[no-untyped-def]
+    return request.param  # type: ignore[no-any-return]
+
+
+ids_benchmarks: list = list(
+    itertools.product(["circuit_A", "circuit_B", "circuit_C"], N_qubits_list, N_layers_list)
+)
+ids_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_benchmarks]
+
+
+@pytest.fixture(
+    params=list(
+        itertools.product(
+            [
+                circuit_A,
+                circuit_B,
+                circuit_C,
+            ],
+            N_qubits_list,
+            N_layers_list,
+        )
+    ),
+    ids=ids_benchmarks,
+)
+def benchmark_circuit(request: pytest.Fixture) -> tuple[Callable, int, int]:  # type: ignore[no-untyped-def]
     return request.param  # type: ignore[no-any-return]
