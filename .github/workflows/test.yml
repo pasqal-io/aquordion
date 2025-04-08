@@ -123,8 +123,5 @@ jobs:
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
-        git fetch origin gh-pages
-        git checkout gh-pages
-        git merge --no-edit origin/main
-        git push origin gh-pages
+        git fetch origin main
         hatch -v run docs:mike deploy --push latest
