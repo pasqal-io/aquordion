@@ -124,6 +124,6 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git fetch origin gh-pages
-        hatch run docs:mike deploy latest --update-aliases
-        hatch run docs:mike set-default latest
-        hatch run docs:mike deploy --push latest
+        hatch -v run docs:mike deploy --push --update-aliases latest
+        hatch -v run docs:mike set-default latest
+        hatch -v run docs:mike deploy --push latest
