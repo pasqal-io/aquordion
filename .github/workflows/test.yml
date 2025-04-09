@@ -119,9 +119,11 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: stats
-    - name: Deploy docs
+    - name: Deploy docs with mike
       run: |
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git fetch origin gh-pages
-        hatch -v run docs:mike deploy --push latest
+        hatch run docs:mike deploy latest --update-aliases
+        hatch run docs:mike set-default latest
+        hatch run docs:mike deploy --push latest
