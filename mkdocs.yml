@@ -1,5 +1,6 @@
 site_name: aquordion
 repo_url: "https://github.com/pasqal-io/aquordion"
+site_url: "https://pasqal-io.github.io/aquordion/latest"
 repo_name: "aquordion"
 
 nav:
