@@ -89,7 +89,7 @@ jobs:
             python -m hatch -v -e tests
         - name: Perform benchmarks
           run: |
-            python -m hatch -e tests run benchmarks
+            python -m hatch -e tests run vqe
         - name: Store benchmark result
           uses: actions/upload-artifact@v4
           with:
