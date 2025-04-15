@@ -11,7 +11,6 @@ from aquordion.utils import values_to_jnp
 
 
 def test_run_pyq(benchmark: pytest.Fixture, benchmark_circuit: tuple[Callable, int, int]) -> None:
-    print(benchmark_circuit)
     fn_circuit, n_qubits, n_layers = benchmark_circuit
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
