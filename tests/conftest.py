@@ -16,6 +16,10 @@ N_qubits_list = [
 
 N_layers_list = [2, 5]
 
+N_qubits_list_vqe = [
+    10,
+]
+
 
 def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:
     """A simple circuit structure without entangling layers coming from https://arxiv.org/pdf/2009.02823.pdf"""
@@ -90,6 +94,32 @@ ids_benchmarks: list = list(
     itertools.product(["circuit_A", "circuit_B", "circuit_C"], N_qubits_list, N_layers_list)
 )
 ids_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_benchmarks]
+
+
+ids_vqe_benchmarks: list = list(
+    itertools.product(["circuit_A", "circuit_B", "circuit_C"], N_qubits_list_vqe, N_layers_list)
+)
+ids_vqe_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_vqe_benchmarks]
+
+
+@pytest.fixture(
+    params=list(
+        itertools.product(
+            [
+                circuit_A,
+                circuit_B,
+                circuit_C,
+            ],
+            N_qubits_list_vqe,
+            N_layers_list,
+        )
+    ),
+    ids=ids_vqe_benchmarks,
+)
+def benchmark_vqe_ansatz(
+    request: pytest.Fixture,
+) -> Any:
+    return request.param
 
 
 @pytest.fixture(

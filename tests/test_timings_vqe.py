@@ -24,10 +24,10 @@ LR = 0.01
 
 def test_vqe_pyq(
     benchmark: pytest.Fixture,
-    benchmark_circuit: tuple[Callable, int, int],
+    benchmark_vqe_ansatz: tuple[Callable, int, int],
     h2_hamiltonian: AbstractBlock,
 ) -> None:
-    fn_circuit, n_qubits, n_layers = benchmark_circuit
+    fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
     # avoid multiple conversion
@@ -48,10 +48,10 @@ def test_vqe_pyq(
 
 def test_vqe_horqrux(
     benchmark: pytest.Fixture,
-    benchmark_circuit: tuple[Callable, int, int],
+    benchmark_vqe_ansatz: tuple[Callable, int, int],
     h2_hamiltonian: AbstractBlock,
 ) -> None:
-    fn_circuit, n_qubits, n_layers = benchmark_circuit
+    fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, _ = fn_circuit(n_qubits, n_layers)
 
     # avoid multiple conversion

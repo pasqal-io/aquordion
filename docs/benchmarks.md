@@ -93,7 +93,7 @@ data_stats_vqe = [{'name': x['name']} | x['params'] | x['stats'] for x in data_v
 
 frame_vqe = pd.DataFrame(data_stats_vqe)
 frame_vqe['name'] = frame_vqe['name'].apply(lambda x: re.findall('test_(.*)\\[', x)[0])
-frame_vqe['fn_circuit'] = frame_vqe['benchmark_circuit'].apply(str)
+frame_vqe['fn_circuit'] = frame_vqe['benchmark_vqe_ansatz'].apply(str)
 frame_vqe['fn_circuit'] = frame_vqe['fn_circuit'].apply(lambda x: re.findall('function (.*) at', x)[0])
 frame_vqe['name'] = frame_vqe['name'].str.replace('vqe_', '')
 axes = frame_vqe.boxplot('median', by=['fn_circuit', 'name'])
