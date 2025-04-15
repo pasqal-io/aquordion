@@ -1,12 +1,15 @@
 # Stats
 
 We generate time stats using `pytest-benchmark` using $10$ rounds for circuits A, B, C coming from  [^1].
-The current execution times are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers.
 So far, we benchmark between `PyQTorch` and `Horqrux`:
 
 - the `run` method,
 - the `expectation` method using a single observable Z,
-- a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer  is run for $30$ iterations.
+- a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $30$ iterations.
+
+The current execution times are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers for the `run` and `expectation` methods.
+For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github.
+
 
 ```python exec="on" source="material-block" session="benchmarks"
 
