@@ -41,7 +41,7 @@ jobs:
             python -m hatch -e tests run test
 
   test_benchmarks:
-    name: Benchmarks
+    name: Benchmarks API methods
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -68,9 +68,37 @@ jobs:
             name: stats
             path: docs/stats.json
 
+  vqe_benchmarks:
+    name: Benchmarks VQE
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+        - name: Checkout main code and submodules
+          uses: actions/checkout@v4
+        - name: Set up Python ${{ matrix.python-version }}
+          uses: actions/setup-python@v5
+          with:
+            python-version: ${{ matrix.python-version }}
+        - name: Install hatch
+          run: |
+            python -m pip install hatch
+        - name: Install main dependencies
+          run: |
+            python -m hatch -v -e tests
+        - name: Perform benchmarks
+          run: |
+            python -m hatch -e tests run benchmarks
+        - name: Store benchmark result
+          uses: actions/upload-artifact@v4
+          with:
+            name: vqestats
+            path: docs/stats_vqe.json
+
   test_docs:
     name: Documentation
-    needs: test_benchmarks
+    needs: [test_benchmarks, vqe_benchmarks]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -89,10 +117,14 @@ jobs:
         - name: Install main dependencies
           run: |
             hatch -v -e docs
-        - name: Download benchmark result
+        - name: Download benchmark API result
           uses: actions/download-artifact@v4
           with:
             name: stats
+        - name: Download benchmark VQE result
+          uses: actions/download-artifact@v4
+          with:
+            name: vqestats
         - name: Test docs
           run: |
             python -m hatch -e docs run mkdocs build --clean --strict
@@ -115,10 +147,14 @@ jobs:
     - name: Install main dependencies
       run: |
         hatch -v -e docs
-    - name: Download benchmark result
+    - name: Download benchmark API result
       uses: actions/download-artifact@v4
       with:
         name: stats
+    - name: Download benchmark VQE result
+      uses: actions/download-artifact@v4
+      with:
+        name: vqestats
     - name: Deploy docs with mike
       run: |
         git config user.name "GitHub Actions"
