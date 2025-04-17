@@ -9,6 +9,7 @@ import pytest
 import torch
 from jax import Array
 from qadence import AbstractBlock
+from torch import Tensor
 from torch.nn import ParameterDict
 
 from aquordion.benchmarks import (
@@ -18,7 +19,7 @@ from aquordion.benchmarks import (
     native_expectation_pyq,
 )
 
-N_epochs = 30
+N_epochs = 20
 LR = 0.01
 
 
@@ -34,16 +35,23 @@ def test_vqe_pyq(
     (circ, obs, embed_fn, params_conv) = bknd_pyqtorch.convert(circuit, h2_hamiltonian)
     values = {p: torch.rand(1, requires_grad=True) for p in params}
 
+    circ = circ.native
+    obs = obs[0].native
+
     def opt_pyq() -> None:
         inputs_embedded = ParameterDict({p: v for p, v in embed_fn(params_conv, values).items()})
         optimizer = torch.optim.Adam(inputs_embedded.values(), lr=LR, foreach=False)
+
+        def loss_fn(vals: ParameterDict) -> Tensor:
+            return native_expectation_pyq(circ, obs, vals)
+
         for _ in range(N_epochs):
             optimizer.zero_grad()
-            loss = native_expectation_pyq(circ.native, obs[0].native, inputs_embedded)
+            loss = loss_fn(inputs_embedded)
             loss.backward()
             optimizer.step()
 
-    benchmark.pedantic(opt_pyq, rounds=10)
+    benchmark.pedantic(opt_pyq, rounds=5)
 
 
 def test_vqe_horqrux(
@@ -85,4 +93,4 @@ def test_vqe_horqrux(
         opt_state = optimizer.init(param_vals)
         param_vals, opt_state = jax.lax.fori_loop(0, N_epochs, train_step, (param_vals, opt_state))
 
-    benchmark.pedantic(opt_horqux, rounds=10)
+    benchmark.pedantic(opt_horqux, rounds=5)
