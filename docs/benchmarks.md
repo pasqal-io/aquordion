@@ -5,7 +5,7 @@ So far, we benchmark between `PyQTorch` and `Horqrux`:
 
 - the `run` method,
 - the `expectation` method using a single observable Z,
-- a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $20$ iterations.
+- a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $50$ iterations.
 
 The current execution times (with $R=10$) are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers for the `run` and `expectation` methods.
 For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github and $R=5$.
@@ -82,7 +82,12 @@ print(fig_to_html(plt.gcf())) # markdown-exec: hide
 
 ## VQE
 
-Here are the median execution times for VQE.
+Here are the median execution times for VQE. We compare optimizing with `PyQTorch` against optimizing with `Horqrux` and jitting.
+
+
+### Times
+
+Below we present the distribution of median times for each circuit type.
 
 ```python exec="on" source="material-block" session="benchmarks"
 
@@ -109,6 +114,27 @@ plt.suptitle('')
 plt.tight_layout()
 print(fig_to_html(plt.gcf())) # markdown-exec: hide
 ```
+
+### Speedups
+
+Below we present the distribution of median speedups for each circuit type. This is done by computing the ratio of times between `PyQTorch` (numerator) and `Horqrux` (denominator). A ratio higher than $1$ means it took less time using `Horqrux` and jitting.
+
+```python exec="on" source="material-block" session="benchmarks"
+
+pyq_vqe = frame_vqe[frame_vqe.name == 'pyq'][['fn_circuit', 'median']]
+horqrux_vqe = frame_vqe[frame_vqe.name == 'horqrux'][['fn_circuit', 'median']]
+ratio_df = pd.merge(pyq_vqe, horqrux_vqe, on='fn_circuit', suffixes=['_pyq', '_horqrux'])
+ratio_df['ratio'] = ratio_df['median_pyq'] / ratio_df['median_horqrux']
+axes = ratio_df.boxplot('ratio', by='fn_circuit')
+axes.set_title('Speedup distributions by circuit')
+axes.set_xlabel('')
+axes.set_ylabel('Speedup')
+plt.suptitle('')
+plt.tight_layout()
+print(fig_to_html(plt.gcf())) # markdown-exec: hide
+
+```
+
 
 [^1]: [Tyson Jones, Julien Gacon, Efficient calculation of gradients in classical simulations of variational quantum algorithms (2020)](https://arxiv.org/abs/2111.05176)
 [^2]: [Tilly et al., The Variational Quantum Eigensolver: a review of methods and best practices (2022)](https://arxiv.org/abs/2111.05176)

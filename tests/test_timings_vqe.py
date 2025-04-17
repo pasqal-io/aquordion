@@ -19,7 +19,7 @@ from aquordion.benchmarks import (
     native_expectation_pyq,
 )
 
-N_epochs = 20
+N_epochs = 50
 LR = 0.01
 
 
