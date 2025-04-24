@@ -1,6 +1,6 @@
 # Stats
 
-We generate time stats using `pytest-benchmark` using $R$ rounds for circuits A, B, C coming from Reference 1[^1].
+We generate timing statistics using `pytest-benchmark` using $R$ rounds for circuits A, B, C [^1].
 So far, we benchmark between `PyQTorch` and `Horqrux`:
 
 - the `run` method,
