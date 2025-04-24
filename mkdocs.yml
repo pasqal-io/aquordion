@@ -34,6 +34,7 @@ theme:
 
 markdown_extensions:
 - admonition  # for notes
+- footnotes
 - pymdownx.arithmatex: # for mathjax
     generic: true
 - pymdownx.highlight:

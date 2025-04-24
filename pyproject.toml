@@ -26,6 +26,7 @@ classifiers=[
 ]
 dependencies = [
     "qadence[horqrux]==1.11.2",
+    "jax<0.6.0",
 ]
 
 
@@ -44,6 +45,7 @@ features = [
 [tool.hatch.envs.tests.scripts]
 test = "pytest -n auto --ignore=tests/test_timings.py {args}"
 benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s tests/test_timings.py"
+vqe = "pytest --benchmark-disable-gc --benchmark-json docs/stats_vqe.json -v -s tests/test_timings_vqe.py"
 
 [tool.hatch.envs.docs]
 installer = "uv"

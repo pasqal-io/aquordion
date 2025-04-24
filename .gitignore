@@ -11,7 +11,7 @@ aquordion/.DS_Store
 
 # docs
 docs/stats.json
-docs/stats.svg
+docs/stats_vqe.json
 
 # Distribution / packaging
 .Python
