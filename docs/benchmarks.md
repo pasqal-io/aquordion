@@ -115,7 +115,7 @@ plt.tight_layout()
 print(fig_to_html(plt.gcf())) # markdown-exec: hide
 ```
 
-### Speedups
+### Speed-ups
 
 Below we present the distribution of median speedups for each circuit type. This is done by computing the ratio of times between `PyQTorch` (numerator) and `Horqrux` (denominator). A ratio higher than $1$ means it took less time using `Horqrux` and jitting.
 
