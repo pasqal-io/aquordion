@@ -117,7 +117,7 @@ print(fig_to_html(plt.gcf())) # markdown-exec: hide
 
 ### Speed-ups
 
-Below we present the distribution of median speedups for each circuit type. This is done by computing the ratio of times between `PyQTorch` (numerator) and `Horqrux` (denominator). A ratio higher than $1$ means it took less time using `Horqrux` and jitting.
+Below we present the distribution of median speed-ups for each circuit type. The timing ratio between `PyQTorch` (numerator) and `Horqrux` (denominator) executions is computed. A ratio higher than $1$ means `Horqrux` and jitting provide computational speed-up over `PyQTorch`.
 
 ```python exec="on" source="material-block" session="benchmarks"
 
