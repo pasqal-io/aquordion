@@ -5,13 +5,22 @@ import torch
 from hypothesis import given, settings
 from qadence import AbstractBlock, QuantumCircuit
 from qadence.backends.jax_utils import jarr_to_tensor
+from qadence.divergences import js_divergence
 from qadence.ml_tools.utils import rand_featureparameters
 from qadence.states import equivalent_state
 
-from aquordion.benchmarks import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
+from aquordion.benchmarks import (
+    expectation_horqrux,
+    expectation_pyq,
+    run_horqrux,
+    run_pyq,
+    sample_horqrux,
+    sample_pyq,
+)
 from aquordion.utils import values_to_jnp
 
 ATOL_32 = 1e-07  # 32 bit precision
+JS_ACCEPTANCE = 7.5e-2
 
 
 @given(st.restricted_circuits())
@@ -21,6 +30,15 @@ def test_run_for_random_circuit(circuit: QuantumCircuit) -> None:
     wf_pyqtorch = run_pyq(circuit, inputs)
     wf_horqrux = jarr_to_tensor(run_horqrux(circuit, values_to_jnp(inputs)))
     assert equivalent_state(wf_pyqtorch, wf_horqrux, atol=ATOL_32)
+
+
+@given(st.restricted_circuits())
+@settings(deadline=None)
+def test_sample_for_random_circuit(circuit: QuantumCircuit) -> None:
+    inputs = rand_featureparameters(circuit, 1)
+    samples_pyqtorch = sample_pyq(circuit, inputs)[0]
+    samples_horqrux = sample_horqrux(circuit, values_to_jnp(inputs))[0]
+    assert js_divergence(samples_horqrux, samples_pyqtorch) < JS_ACCEPTANCE
 
 
 @given(st.restricted_circuits(), st.observables())
