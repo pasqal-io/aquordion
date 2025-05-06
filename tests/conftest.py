@@ -2,10 +2,10 @@ from __future__ import annotations
 
 import itertools
 import random
-from typing import Callable
+from typing import Any, Callable
 
 import pytest
-from qadence import CNOT, MCZ, RX, RY, RZ, H, QuantumCircuit, chain
+from qadence import CNOT, MCZ, RX, RY, RZ, AbstractBlock, H, I, QuantumCircuit, X, Y, Z, chain
 
 N_qubits_list = [
     2,
@@ -15,6 +15,10 @@ N_qubits_list = [
 ]
 
 N_layers_list = [2, 5]
+
+N_qubits_list_vqe = [
+    10,
+]
 
 
 def circuit_A(n_qubits: int, n_layers: int = 1) -> tuple[QuantumCircuit, list[str]]:
@@ -82,7 +86,7 @@ def random_circuit_integers() -> tuple[int, int]:
     ],
     ids=["circuit_A", "circuit_B", "circuit_C"],
 )
-def fn_circuit(request) -> Callable:  # type: ignore[no-untyped-def]
+def fn_circuit(request: pytest.Fixture) -> Callable:
     return request.param  # type: ignore[no-any-return]
 
 
@@ -90,6 +94,32 @@ ids_benchmarks: list = list(
     itertools.product(["circuit_A", "circuit_B", "circuit_C"], N_qubits_list, N_layers_list)
 )
 ids_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_benchmarks]
+
+
+ids_vqe_benchmarks: list = list(
+    itertools.product(["circuit_A", "circuit_B", "circuit_C"], N_qubits_list_vqe, N_layers_list)
+)
+ids_vqe_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_vqe_benchmarks]
+
+
+@pytest.fixture(
+    params=list(
+        itertools.product(
+            [
+                circuit_A,
+                circuit_B,
+                circuit_C,
+            ],
+            N_qubits_list_vqe,
+            N_layers_list,
+        )
+    ),
+    ids=ids_vqe_benchmarks,
+)
+def benchmark_vqe_ansatz(
+    request: pytest.Fixture,
+) -> Any:
+    return request.param
 
 
 @pytest.fixture(
@@ -106,5 +136,28 @@ ids_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_benchmarks]
     ),
     ids=ids_benchmarks,
 )
-def benchmark_circuit(request: pytest.Fixture) -> tuple[Callable, int, int]:  # type: ignore[no-untyped-def]
-    return request.param  # type: ignore[no-any-return]
+def benchmark_circuit(
+    request: pytest.Fixture,
+) -> Any:
+    return request.param
+
+
+@pytest.fixture
+def h2_hamiltonian() -> AbstractBlock:
+    return (
+        -0.09963387941370971 * I(0)
+        + 0.17110545123720233 * Z(0)
+        + 0.17110545123720225 * Z(1)
+        + 0.16859349595532533 * Z(0) * Z(1)
+        + 0.04533062254573469 * Y(0) * X(1) * X(2) * Y(3)
+        - 0.04533062254573469 * Y(0) * Y(1) * X(2) * X(3)
+        - 0.04533062254573469 * X(0) * X(1) * Y(2) * Y(3)
+        + 0.04533062254573469 * X(0) * Y(1) * Y(2) * X(3)
+        - 0.22250914236600539 * Z(2)
+        + 0.12051027989546245 * Z(0) * Z(2)
+        - 0.22250914236600539 * Z(3)
+        + 0.16584090244119712 * Z(0) * Z(3)
+        + 0.16584090244119712 * Z(1) * Z(2)
+        + 0.12051027989546245 * Z(1) * Z(3)
+        + 0.1743207725924201 * Z(2) * Z(3)
+    )
