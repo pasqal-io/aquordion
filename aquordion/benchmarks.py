@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from collections import Counter
 
-from collections import Counter
-
 import horqrux
 import pyqtorch as pyq
 from jax import Array
