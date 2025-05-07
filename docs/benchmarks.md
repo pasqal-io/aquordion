@@ -8,7 +8,9 @@ So far, we benchmark between `PyQTorch` and `Horqrux`:
 - a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $50$ iterations.
 
 The current execution times (with $R=10$) are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers for the `run` and `expectation` methods.
-For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github and $R=5$. Additionally, when using $1000$ shots, we reduce the number of iterations to $10$.
+For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github and $R=5$,
+and we also benchmark two differentiation modes (automatic differentiation and the Adjoint method [^1]).
+Additionally, when using $1000$ shots, we reduce the number of iterations to $10$.
 
 
 ```python exec="on" source="material-block" session="benchmarks"
@@ -102,7 +104,7 @@ frame_vqe['name'] = frame_vqe['name'].str.replace('vqe_', '')
 
 ### Times
 
-Below we present the distribution of median times for each circuit type, without shots and with shots (`n_shots = 1000`).
+Below we present the distribution of median times for each circuit type, without shots and with shots ($n_shots = 1000$).
 
 ```python exec="on" source="material-block" session="benchmarks"
 axes = frame_vqe[frame_vqe.n_shots == 0].boxplot('median', by=['fn_circuit', 'name', 'diff_mode'])
