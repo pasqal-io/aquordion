@@ -42,7 +42,7 @@ features = [
 ]
 
 [tool.hatch.envs.tests.scripts]
-test = "pytest -n auto --ignore=tests/test_timings.py {args}"
+test = "pytest -n auto --ignore=tests/test_timings.py --ignore=tests/test_timings_vqe.py {args}"
 benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s tests/test_timings.py"
 vqe = "pytest --benchmark-disable-gc --benchmark-json docs/stats_vqe.json -v -s tests/test_timings_vqe.py"
 
