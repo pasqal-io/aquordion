@@ -5,6 +5,7 @@ from typing import Callable
 import horqrux
 import jax
 import optax
+import pyqtorch as pyq
 import pytest
 import torch
 from jax import Array
@@ -20,13 +21,19 @@ from aquordion.benchmarks import (
 )
 
 N_epochs = 50
+N_epochs_shots = 10
 LR = 0.01
 
 
+@pytest.mark.parametrize(
+    "n_shots, diff_mode", [(0, pyq.DiffMode.AD), (0, pyq.DiffMode.ADJOINT), (1000, pyq.DiffMode.AD)]
+)
 def test_vqe_pyq(
     benchmark: pytest.Fixture,
     benchmark_vqe_ansatz: tuple[Callable, int, int],
     h2_hamiltonian: AbstractBlock,
+    n_shots: int,
+    diff_mode: pyq.DiffMode,
 ) -> None:
     fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, params = fn_circuit(n_qubits, n_layers)
@@ -37,15 +44,16 @@ def test_vqe_pyq(
 
     circ = circ.native
     obs = obs[0].native
+    N = N_epochs if n_shots == 0 else N_epochs_shots
 
     def opt_pyq() -> None:
         inputs_embedded = ParameterDict({p: v for p, v in embed_fn(params_conv, values).items()})
         optimizer = torch.optim.Adam(inputs_embedded.values(), lr=LR, foreach=False)
 
         def loss_fn(vals: ParameterDict) -> Tensor:
-            return native_expectation_pyq(circ, obs, vals)
+            return native_expectation_pyq(circ, obs, vals, diff_mode=diff_mode, n_shots=n_shots)
 
-        for _ in range(N_epochs):
+        for _ in range(N):
             optimizer.zero_grad()
             loss = loss_fn(inputs_embedded)
             loss.backward()
@@ -54,10 +62,15 @@ def test_vqe_pyq(
     benchmark.pedantic(opt_pyq, rounds=5)
 
 
+@pytest.mark.parametrize(
+    "n_shots, diff_mode", [(0, pyq.DiffMode.AD), (0, pyq.DiffMode.ADJOINT), (1000, pyq.DiffMode.AD)]
+)
 def test_vqe_horqrux(
     benchmark: pytest.Fixture,
     benchmark_vqe_ansatz: tuple[Callable, int, int],
     h2_hamiltonian: AbstractBlock,
+    n_shots: int,
+    diff_mode: horqrux.DiffMode,
 ) -> None:
     fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, _ = fn_circuit(n_qubits, n_layers)
@@ -68,6 +81,7 @@ def test_vqe_horqrux(
     ansatz = horqrux.QuantumCircuit(circ.native.n_qubits, list(iter(circ.native)))
 
     observable = horqrux.Observable(list(iter(obs[0].native)))
+    N = N_epochs if n_shots == 0 else N_epochs_shots
 
     def opt_horqux() -> None:
         key = jax.random.PRNGKey(42)
@@ -82,7 +96,11 @@ def test_vqe_horqrux(
         def loss_fn(param_vals: Array) -> Array:
             """The loss function is the sum of all expectation value for the observable components."""
             values = dict(zip(ansatz.vparams, param_vals))
-            return jax.numpy.sum(native_expectation_horqrux(ansatz, observable, values))
+            return jax.numpy.sum(
+                native_expectation_horqrux(
+                    ansatz, observable, values, diff_mode=diff_mode, n_shots=n_shots
+                )
+            )
 
         def train_step(i: int, param_vals_opt_state: tuple) -> tuple:
             param_vals, opt_state = param_vals_opt_state
@@ -91,6 +109,6 @@ def test_vqe_horqrux(
 
         param_vals = init_param_vals.clone()
         opt_state = optimizer.init(param_vals)
-        param_vals, opt_state = jax.lax.fori_loop(0, N_epochs, train_step, (param_vals, opt_state))
+        param_vals, opt_state = jax.lax.fori_loop(0, N, train_step, (param_vals, opt_state))
 
     benchmark.pedantic(opt_horqux, rounds=5)

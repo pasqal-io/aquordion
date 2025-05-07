@@ -8,7 +8,7 @@ So far, we benchmark between `PyQTorch` and `Horqrux`:
 - a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $50$ iterations.
 
 The current execution times (with $R=10$) are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers for the `run` and `expectation` methods.
-For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github and $R=5$.
+For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github and $R=5$. Additionally, when using $1000$ shots, we reduce the number of iterations to $10$.
 
 
 ```python exec="on" source="material-block" session="benchmarks"
@@ -44,7 +44,7 @@ run_frame = frame[frame['name'].str.startswith('run')]
 run_frame['name'] = run_frame['name'].str.replace('run_', '')
 
 axes = run_frame.boxplot('median', by=['fn_circuit', 'name'])
-axes.set_title('Timing distributions by test and circuit')
+axes.set_title("Timing distributions by test and circuit \n for `run` method")
 axes.set_xlabel('')
 axes.set_ylabel('Time (s)')
 axes.set_yscale('log')
@@ -70,7 +70,7 @@ Here are the median execution times for the `expectation` method over a random s
 expectation_frame = frame[frame['name'].str.startswith('expectation')]
 expectation_frame['name'] = expectation_frame['name'].str.replace('expectation_', '')
 axes = expectation_frame.boxplot('median', by=['fn_circuit', 'name'])
-axes.set_title('Timing distributions by test and circuit')
+axes.set_title("Timing distributions by test and circuit \n for `expectation` method")
 axes.set_xlabel('')
 axes.set_ylabel('Time (s)')
 axes.set_yscale('log')
@@ -84,13 +84,7 @@ print(fig_to_html(plt.gcf())) # markdown-exec: hide
 
 Here are the median execution times for VQE. We compare optimizing with `PyQTorch` against optimizing with `Horqrux` and jitting.
 
-
-### Times
-
-Below we present the distribution of median times for each circuit type.
-
 ```python exec="on" source="material-block" session="benchmarks"
-
 fname = "stats_vqe.json"
 if not os.path.isfile(fname):
     fname = "docs/stats_vqe.json"
@@ -104,15 +98,35 @@ frame_vqe['name'] = frame_vqe['name'].apply(lambda x: re.findall('test_(.*)\\[',
 frame_vqe['fn_circuit'] = frame_vqe['benchmark_vqe_ansatz'].apply(str)
 frame_vqe['fn_circuit'] = frame_vqe['fn_circuit'].apply(lambda x: re.findall('function (.*) at', x)[0])
 frame_vqe['name'] = frame_vqe['name'].str.replace('vqe_', '')
-axes = frame_vqe.boxplot('median', by=['fn_circuit', 'name'])
-axes.set_title('Timing distributions by test and circuit')
+```
+
+### Times
+
+Below we present the distribution of median times for each circuit type, without shots and with shots (`n_shots = 1000`).
+
+```python exec="on" source="material-block" session="benchmarks"
+axes = frame_vqe[frame_vqe.n_shots == 0].boxplot('median', by=['fn_circuit', 'name', 'diff_mode'])
+axes.set_title('Timing distributions by test and circuit without shots - 50 epochs')
 axes.set_xlabel('')
 axes.set_ylabel('Time (s)')
-axes.set_yscale('log')
+#axes.set_yscale('log')
 plt.xticks(rotation=75)
 plt.suptitle('')
 plt.tight_layout()
 print(fig_to_html(plt.gcf())) # markdown-exec: hide
+
+
+
+axes = frame_vqe[frame_vqe.n_shots > 0].boxplot('median', by=['fn_circuit', 'name', 'diff_mode'])
+axes.set_title('Timing distributions by test and circuit with shots  - 10 epochs')
+axes.set_xlabel('')
+axes.set_ylabel('Time (s)')
+#axes.set_yscale('log')
+plt.xticks(rotation=75)
+plt.suptitle('')
+plt.tight_layout()
+print(fig_to_html(plt.gcf())) # markdown-exec: hide
+
 ```
 
 ### Speed-ups
@@ -121,14 +135,25 @@ Below we present the distribution of median speed-ups for each circuit type. The
 
 ```python exec="on" source="material-block" session="benchmarks"
 
-pyq_vqe = frame_vqe[frame_vqe.name == 'pyq'][['fn_circuit', 'median']]
-horqrux_vqe = frame_vqe[frame_vqe.name == 'horqrux'][['fn_circuit', 'median']]
-ratio_df = pd.merge(pyq_vqe, horqrux_vqe, on='fn_circuit', suffixes=['_pyq', '_horqrux'])
+pyq_vqe = frame_vqe[frame_vqe.name == 'pyq'][['fn_circuit', 'median', 'n_shots', 'diff_mode']]
+horqrux_vqe = frame_vqe[frame_vqe.name == 'horqrux'][['fn_circuit', 'median', 'n_shots', 'diff_mode']]
+ratio_df = pd.merge(pyq_vqe, horqrux_vqe, on=['fn_circuit', 'diff_mode', 'n_shots'], suffixes=['_pyq', '_horqrux'])
 ratio_df['ratio'] = ratio_df['median_pyq'] / ratio_df['median_horqrux']
-axes = ratio_df.boxplot('ratio', by='fn_circuit')
-axes.set_title('Speedup distributions by circuit')
+axes = ratio_df[ratio_df.n_shots == 0].boxplot('ratio', by=['fn_circuit', 'diff_mode'])
+axes.set_title('Speedup distributions by circuit without shots - 50 epochs')
 axes.set_xlabel('')
 axes.set_ylabel('Speedup')
+plt.xticks(rotation=75)
+plt.suptitle('')
+plt.tight_layout()
+print(fig_to_html(plt.gcf())) # markdown-exec: hide
+
+
+axes = ratio_df[ratio_df.n_shots > 0].boxplot('ratio', by='fn_circuit')
+axes.set_title('Speedup distributions by circuit with shots - 10 epochs')
+axes.set_xlabel('')
+axes.set_ylabel('Speedup')
+plt.xticks(rotation=75)
 plt.suptitle('')
 plt.tight_layout()
 print(fig_to_html(plt.gcf())) # markdown-exec: hide

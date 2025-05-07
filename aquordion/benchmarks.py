@@ -46,6 +46,7 @@ def native_expectation_pyq(
     observable: pyq.Observable,
     inputs: dict[str, Tensor],
     diff_mode: pyq.DiffMode = pyq.DiffMode.AD,
+    n_shots: int = 0,
 ) -> Tensor:
     """Expectation with native PyQTorch."""
     return pyq.expectation(
@@ -54,6 +55,7 @@ def native_expectation_pyq(
         observable=observable,
         values=inputs,
         diff_mode=diff_mode,
+        n_shots=n_shots if n_shots > 0 else None,
     )
 
 
@@ -62,6 +64,7 @@ def native_expectation_horqrux(
     observable: horqrux.Observable,
     inputs: dict[str, Array],
     diff_mode: horqrux.DiffMode = horqrux.DiffMode.AD,
+    n_shots: int = 0,
 ) -> Array:
     """Expectation with native Horqrux."""
     return horqrux.expectation(
@@ -70,4 +73,5 @@ def native_expectation_horqrux(
         observables=[observable],
         values=inputs,
         diff_mode=diff_mode,
+        n_shots=n_shots,
     )
