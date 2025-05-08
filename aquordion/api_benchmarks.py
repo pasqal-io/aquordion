@@ -39,39 +39,3 @@ def expectation_horqrux(
     """Expectation with Horqrux"""
     (circ, obs, embed_fn, params) = bknd_horqrux.convert(circuit, observable)
     return bknd_horqrux.expectation(circ, obs, embed_fn(params, inputs))
-
-
-def native_expectation_pyq(
-    circuit: pyq.QuantumCircuit,
-    observable: pyq.Observable,
-    inputs: dict[str, Tensor],
-    diff_mode: pyq.DiffMode = pyq.DiffMode.AD,
-    n_shots: int = 0,
-) -> Tensor:
-    """Expectation with native PyQTorch."""
-    return pyq.expectation(
-        circuit,
-        state=pyq.zero_state(max(circuit.n_qubits, len(observable.qubit_support))),
-        observable=observable,
-        values=inputs,
-        diff_mode=diff_mode,
-        n_shots=n_shots if n_shots > 0 else None,
-    )
-
-
-def native_expectation_horqrux(
-    circuit: horqrux.QuantumCircuit,
-    observable: horqrux.Observable,
-    inputs: dict[str, Array],
-    diff_mode: horqrux.DiffMode = horqrux.DiffMode.AD,
-    n_shots: int = 0,
-) -> Array:
-    """Expectation with native Horqrux."""
-    return horqrux.expectation(
-        state=horqrux.zero_state(max(circuit.n_qubits, len(observable.qubit_support))),
-        circuit=circuit,
-        observables=[observable],
-        values=inputs,
-        diff_mode=diff_mode,
-        n_shots=n_shots,
-    )
