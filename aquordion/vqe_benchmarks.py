@@ -1,16 +1,16 @@
 from __future__ import annotations
+
 from typing import Callable
 
+import horqrux
+import jax
+import optax
+import pyqtorch as pyq
 import torch
+from jax import Array
+from torch import Tensor
 from torch.nn import ParameterDict
 
-import jax
-from jax import Array
-import optax
-
-import horqrux
-import pyqtorch as pyq
-from torch import Tensor
 
 def native_expectation_pyq(
     circuit: pyq.QuantumCircuit,
@@ -47,6 +47,7 @@ def native_expectation_horqrux(
         n_shots=n_shots,
     )
 
+
 def vqe_pyq_adam(
     circuit: pyq.QuantumCircuit,
     observable: pyq.Observable,
@@ -54,22 +55,25 @@ def vqe_pyq_adam(
     diff_mode: pyq.DiffMode = pyq.DiffMode.AD,
     n_shots: int = 0,
     LR: float = 1e-2,
-    N_epochs: int = 50
-    ) -> Callable:
+    N_epochs: int = 50,
+) -> Callable:
 
     def opt_pyq() -> None:
         optimizer = torch.optim.Adam(inputs_embedded.values(), lr=LR, foreach=False)
 
         def loss_fn(vals: ParameterDict) -> Tensor:
-            return native_expectation_pyq(circuit, observable, vals, diff_mode=diff_mode, n_shots=n_shots)
+            return native_expectation_pyq(
+                circuit, observable, vals, diff_mode=diff_mode, n_shots=n_shots
+            )
 
         for _ in range(N_epochs):
             optimizer.zero_grad()
             loss = loss_fn(inputs_embedded)
             loss.backward()
             optimizer.step()
-    
+
     return opt_pyq
+
 
 def vqe_horqrux_adam(
     circuit: horqrux.QuantumCircuit,
@@ -79,7 +83,7 @@ def vqe_horqrux_adam(
     n_shots: int = 0,
     LR: float = 1e-2,
     N_epochs: int = 50,
-    ) -> Callable:
+) -> Callable:
 
     def opt_horqux() -> None:
         optimizer = optax.adam(learning_rate=LR)
@@ -106,5 +110,5 @@ def vqe_horqrux_adam(
         param_vals = inputs.clone()
         opt_state = optimizer.init(param_vals)
         param_vals, opt_state = jax.lax.fori_loop(0, N_epochs, train_step, (param_vals, opt_state))
-    
+
     return opt_horqux
