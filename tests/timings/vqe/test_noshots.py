@@ -4,24 +4,20 @@ from typing import Callable
 
 import horqrux
 import jax
-import optax
 import pyqtorch as pyq
 import pytest
 import torch
-from jax import Array
 from qadence import AbstractBlock
-from torch import Tensor
 from torch.nn import ParameterDict
 
 from aquordion.api_benchmarks import (
     bknd_horqrux,
     bknd_pyqtorch,
 )
-from aquordion.vqe_benchmarks import vqe_pyq_adam, vqe_horqrux_adam
+from aquordion.vqe_benchmarks import vqe_horqrux_adam, vqe_pyq_adam
 
-@pytest.mark.parametrize(
-    "diff_mode", [pyq.DiffMode.AD, pyq.DiffMode.ADJOINT]
-)
+
+@pytest.mark.parametrize("diff_mode", [pyq.DiffMode.AD, pyq.DiffMode.ADJOINT])
 def test_vqe_pyq(
     benchmark: pytest.Fixture,
     benchmark_vqe_ansatz: tuple[Callable, int, int],
@@ -43,9 +39,7 @@ def test_vqe_pyq(
     benchmark.pedantic(opt_pyq, rounds=5)
 
 
-@pytest.mark.parametrize(
-    "diff_mode", [horqrux.DiffMode.AD, horqrux.DiffMode.ADJOINT]
-)
+@pytest.mark.parametrize("diff_mode", [horqrux.DiffMode.AD, horqrux.DiffMode.ADJOINT])
 def test_vqe_horqrux(
     benchmark: pytest.Fixture,
     benchmark_vqe_ansatz: tuple[Callable, int, int],

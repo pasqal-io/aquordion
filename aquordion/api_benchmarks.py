@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from collections import Counter
+
 import horqrux
 import pyqtorch as pyq
 from jax import Array
@@ -23,6 +25,22 @@ def run_horqrux(circuit: QuantumCircuit, inputs: dict[str, Array]) -> Array:
     """Run with Horqrux"""
     (circ, _, embed_fn, params) = bknd_horqrux.convert(circuit)
     return bknd_horqrux.run(circ, embed_fn(params, inputs))
+
+
+def sample_pyq(circuit: QuantumCircuit, inputs: dict[str, Tensor], n_shots: int = 500) -> Counter:
+    """Sample with PyQTorch"""
+    (circ, _, embed_fn, params) = bknd_pyqtorch.convert(circuit)
+    samples: Counter = bknd_pyqtorch.sample(circ, embed_fn(params, inputs), n_shots=n_shots)
+    return samples
+
+
+def sample_horqrux(
+    circuit: QuantumCircuit, inputs: dict[str, Array], n_shots: int = 500
+) -> Counter:
+    """Sample with Horqrux"""
+    (circ, _, embed_fn, params) = bknd_horqrux.convert(circuit)
+    samples: Counter = bknd_horqrux.sample(circ, embed_fn(params, inputs), n_shots=n_shots)
+    return samples
 
 
 def expectation_pyq(
