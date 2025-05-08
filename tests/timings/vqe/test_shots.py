@@ -32,7 +32,7 @@ def test_vqe_pyq(
     obs = obs[0].native
     inputs_embedded = ParameterDict({p: v for p, v in embed_fn(params_conv, values).items()})
 
-    opt_pyq = vqe_pyq_adam(circ, obs, inputs_embedded, n_shots=100, N_epochs=10)
+    opt_pyq = vqe_pyq_adam(circ, obs, inputs_embedded, n_shots=100, N_epochs=5)
     benchmark.pedantic(opt_pyq, rounds=5)
 
 
@@ -54,6 +54,6 @@ def test_vqe_horqrux(
     key = jax.random.PRNGKey(42)
     init_param_vals = jax.random.uniform(key, shape=(ansatz.n_vparams,))
 
-    opt_horqux = vqe_horqrux_adam(ansatz, observable, init_param_vals, n_shots=100, N_epochs=10)
+    opt_horqux = vqe_horqrux_adam(ansatz, observable, init_param_vals, n_shots=100, N_epochs=5)
 
     benchmark.pedantic(opt_horqux, rounds=5)

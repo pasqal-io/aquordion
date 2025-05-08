@@ -10,7 +10,7 @@ So far, we benchmark between `PyQTorch` and `Horqrux`:
 The current execution times (with $R=10$) are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers for the `run` and `expectation` methods.
 For VQE, we reduce the tests to only $10$ qubits for avoiding long jobs time on Github and $R=5$,
 and we also benchmark two differentiation modes (automatic differentiation and the Adjoint method [^1]).
-Additionally, when using $100$ shots, we reduce the number of iterations to $10$.
+Additionally, when using $100$ shots, we reduce the number of iterations to $5$.
 
 
 ```python exec="on" source="material-block" session="benchmarks"
