@@ -186,7 +186,11 @@ jobs:
     - name: Download benchmark VQE result
       uses: actions/download-artifact@v4
       with:
-        name: vqestats
+        name: vqestatsnoshots
+    - name: Download benchmark VQE result shots
+      uses: actions/download-artifact@v4
+      with:
+        name: vqestatsshots
     - name: Deploy docs with mike
       run: |
         git config user.name "GitHub Actions"
