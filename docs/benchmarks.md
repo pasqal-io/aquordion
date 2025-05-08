@@ -5,12 +5,12 @@ So far, we benchmark between `PyQTorch` and `Horqrux`:
 
 - the `run` method,
 - the `expectation` method using a single observable Z,
-- a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $50$ iterations.
+- a variational quantum eigensolver[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3]. The underlying gradient-based Adam optimizer is run for $30$ iterations.
 
 The current execution times (with $R=10$) are for circuits defined over $2, 5, 10, 15$ qubits and $2, 5$ layers for the `run` and `expectation` methods.
-For VQE, we reduce the tests to $4$ qubits $R=5$ for avoiding long jobs time on Github,
+For VQE, we reduce the tests to $10$ qubits $R=5$ for avoiding long jobs time on Github,
 and we also benchmark two differentiation modes (automatic differentiation and the Adjoint method [^1]).
-Additionally, when using $100$ shots, we reduce the number of iterations to $20$.
+Additionally, when using $100$ shots, we reduce the number of iterations to $5$.
 
 
 ```python exec="on" source="material-block" session="benchmarks"

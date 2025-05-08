@@ -55,7 +55,7 @@ def vqe_pyq_adam(
     diff_mode: pyq.DiffMode = pyq.DiffMode.AD,
     n_shots: int = 0,
     LR: float = 1e-2,
-    N_epochs: int = 50,
+    N_epochs: int = 30,
 ) -> Callable:
 
     def opt_pyq() -> None:
@@ -82,7 +82,7 @@ def vqe_horqrux_adam(
     diff_mode: horqrux.DiffMode = horqrux.DiffMode.AD,
     n_shots: int = 0,
     LR: float = 1e-2,
-    N_epochs: int = 50,
+    N_epochs: int = 30,
 ) -> Callable:
 
     def opt_horqux() -> None:
