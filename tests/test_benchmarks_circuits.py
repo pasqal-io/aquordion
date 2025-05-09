@@ -10,7 +10,7 @@ from qadence.backends.jax_utils import jarr_to_tensor
 from qadence.divergences import js_divergence
 from qadence.states import equivalent_state
 
-from aquordion.benchmarks import (
+from aquordion.api_benchmarks import (
     expectation_horqrux,
     expectation_pyq,
     run_horqrux,

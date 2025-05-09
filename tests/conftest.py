@@ -17,6 +17,7 @@ N_qubits_list = [
 N_layers_list = [2, 5]
 
 N_qubits_list_vqe = [
+    4,
     10,
 ]
 

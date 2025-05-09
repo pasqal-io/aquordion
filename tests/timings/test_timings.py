@@ -6,7 +6,7 @@ import pytest
 import torch
 from qadence import Z
 
-from aquordion.benchmarks import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
+from aquordion.api_benchmarks import expectation_horqrux, expectation_pyq, run_horqrux, run_pyq
 from aquordion.utils import values_to_jnp
 
 
