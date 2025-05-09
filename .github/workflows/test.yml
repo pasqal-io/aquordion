@@ -69,7 +69,7 @@ jobs:
             path: docs/stats.json
 
   vqe_benchmarks:
-    name: Benchmarks VQE no shots
+    name: Benchmarks VQE state vector simulations
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -96,8 +96,8 @@ jobs:
             name: vqestatsnoshots
             path: docs/stats_vqe_noshots.json
 
-  vqe_benchmarks_shots:
-    name: Benchmarks VQE with shots
+  vqe_benchmarks_sampling:
+    name: Benchmarks VQE with sampling
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -126,7 +126,7 @@ jobs:
 
   test_docs:
     name: Documentation
-    needs: [test_benchmarks, vqe_benchmarks, vqe_benchmarks_shots]
+    needs: [test_benchmarks, vqe_benchmarks, vqe_benchmarks_sampling]
     runs-on: ubuntu-latest
     strategy:
       matrix:
