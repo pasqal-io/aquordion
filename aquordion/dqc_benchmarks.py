@@ -22,20 +22,22 @@ def dqc_pyq_adam(
     LR: float = 1e-2,
     N_epochs: int = 30,
 ) -> Callable:
-
-    def exp_fn(inputs: Tensor) -> Tensor:
-        return native_expectation_pyq(
-            circuit,
-            observable,
-            {
-                **inputs_embedded,
-                **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
-            },
-        )
+    """Taken from https://pasqal-io.github.io/pyqtorch/latest/pde/"""
 
     class DomainSampling(torch.nn.Module):
+
         def __init__(self) -> None:
             super().__init__()
+
+        def exp_fn(self, inputs: Tensor) -> Tensor:
+            return native_expectation_pyq(
+                circuit,
+                observable,
+                {
+                    **inputs_embedded,
+                    **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
+                },
+            )
 
         def sample(self, requires_grad: bool = False) -> Tensor:
             return torch.rand((BATCH_SIZE, N_VARIABLES), requires_grad=requires_grad)
@@ -43,33 +45,33 @@ def dqc_pyq_adam(
         def left_boundary(self) -> Tensor:  # u(0,y)=0
             sample = self.sample()
             sample[:, X_POS] = 0.0
-            return exp_fn(sample).pow(2).mean()
+            return self.exp_fn(sample).pow(2).mean()
 
         def right_boundary(self) -> Tensor:  # u(L,y)=0
             sample = self.sample()
             sample[:, X_POS] = 1.0
-            return exp_fn(sample).pow(2).mean()
+            return self.exp_fn(sample).pow(2).mean()
 
         def top_boundary(self) -> Tensor:  # u(x,H)=0
             sample = self.sample()
             sample[:, Y_POS] = 1.0
-            return exp_fn(sample).pow(2).mean()
+            return self.exp_fn(sample).pow(2).mean()
 
         def bottom_boundary(self) -> Tensor:  # u(x,0)=f(x)
             sample = self.sample()
             sample[:, Y_POS] = 0.0
-            return (exp_fn(sample) - torch.sin(torch.pi * sample[:, 0])).pow(2).mean()
+            return (self.exp_fn(sample) - torch.sin(torch.pi * sample[:, 0])).pow(2).mean()
 
         def interior(self) -> Tensor:  # uxx+uyy=0
             sample = self.sample(requires_grad=True)
-            exp_eval = exp_fn(sample)
+            exp_eval = self.exp_fn(sample)
             dfdxy = torch.autograd.grad(
                 exp_eval,
                 sample,
                 torch.ones_like(exp_eval),
                 create_graph=True,
             )[0]
-            dfdxxdyy = torch.autogradgrad(
+            dfdxxdyy = torch.autograd.grad(
                 dfdxy,
                 sample,
                 torch.ones_like(dfdxy),
