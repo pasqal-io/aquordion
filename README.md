@@ -27,3 +27,10 @@ Run the following commands to generate timings for the VQE case (without shots a
 hatch -e tests run vqe
 hatch -e tests run vqeshots
 ```
+
+### DQC functions
+
+Run the following commands to generate timings for the DQC case:
+```bash
+hatch -e tests run dqc
+```
