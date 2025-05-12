@@ -5,7 +5,6 @@ from typing import Callable
 import horqrux
 import jax
 import jax.numpy as jnp
-import numpy as np
 import optax
 import pyqtorch as pyq
 import torch
@@ -114,6 +113,7 @@ def dqc_horqrux_adam(
     inputs: Array,
     LR: float = 1e-2,
     N_epochs: int = 30,
+    key: jax.random.PRNGKey = jax.random.PRNGKey(42),
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/horqrux/latest/dqc/"""
 
@@ -125,7 +125,7 @@ def dqc_horqrux_adam(
             param_vals = optax.apply_updates(param_vals, updates)
             return param_vals, opt_state
 
-        def loss_fn(param_vals: Array) -> Array:
+        def loss_fn(param_vals: Array, key: jax.random.PRNGKey) -> Array:
             """The loss function is the sum of all expectation value for the observable components."""
             values = dict(zip(circuit.vparams, param_vals))
 
@@ -169,13 +169,13 @@ def dqc_horqrux_adam(
 
             return jnp.mean(
                 jax.vmap(pde_loss, in_axes=(0, 0))(
-                    *np.random.uniform(0, 1.0, (N_VARIABLES, BATCH_SIZE))
+                    *jax.random.uniform(key, (N_VARIABLES, BATCH_SIZE))
                 )
             )
 
         def train_step(i: int, param_vals_opt_state: tuple) -> tuple:
             param_vals, opt_state = param_vals_opt_state
-            _, grads = jax.value_and_grad(loss_fn)(param_vals)
+            _, grads = jax.value_and_grad(loss_fn)(param_vals, jax.random.PRNGKey(i))
             return optimize_step(param_vals, opt_state, grads)
 
         param_vals = inputs.clone()
