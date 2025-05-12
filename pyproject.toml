@@ -77,7 +77,7 @@ lint.select = ["E", "F", "I", "Q"]
 lint.extend-ignore = ["F841", "F403", "E731", "E741"]
 line-length = 120
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 required-imports = ["from __future__ import annotations"]
 
 [tool.ruff.lint.per-file-ignores]
@@ -86,7 +86,7 @@ required-imports = ["from __future__ import annotations"]
 [tool.ruff.lint.mccabe]
 max-complexity = 15
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
 [tool.black]
