@@ -116,7 +116,6 @@ def dqc_horqrux_adam(
     LR: float = 1e-2,
     N_epochs: int = 30,
     n_shots: int = 0,
-    key: jax.random.PRNGKey = jax.random.PRNGKey(42),
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/horqrux/latest/dqc/"""
 
