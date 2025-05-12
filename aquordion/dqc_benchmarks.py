@@ -25,6 +25,7 @@ def dqc_pyq_adam(
     observable: pyq.Observable,
     inputs_embedded: ParameterDict,
     LR: float = 1e-2,
+    n_shots: int = 0,
     N_epochs: int = 30,
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/pyqtorch/latest/pde/"""
@@ -42,6 +43,7 @@ def dqc_pyq_adam(
                     **inputs_embedded,
                     **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
                 },
+                n_shots=n_shots,
             )
 
         def sample(self, requires_grad: bool = False) -> Tensor:
@@ -113,6 +115,7 @@ def dqc_horqrux_adam(
     inputs: Array,
     LR: float = 1e-2,
     N_epochs: int = 30,
+    n_shots: int = 0,
     key: jax.random.PRNGKey = jax.random.PRNGKey(42),
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/horqrux/latest/dqc/"""
@@ -138,7 +141,7 @@ def dqc_horqrux_adam(
                 bottom = (x, jnp.zeros_like(x))  # u(x,0)=f(x)
                 terms = jnp.dstack(list(map(jnp.hstack, [left, right, top, bottom])))
                 exp_fn = lambda xy: native_expectation_horqrux(
-                    circuit, observable, values | {"x": xy[0], "y": xy[1]}
+                    circuit, observable, values | {"x": xy[0], "y": xy[1]}, n_shots=n_shots
                 )
                 loss_left, loss_right, loss_top, loss_bottom = jax.vmap(exp_fn, in_axes=(2,))(terms)
                 loss_bottom -= jnp.sin(jnp.pi * x)
