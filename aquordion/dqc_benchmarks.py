@@ -2,11 +2,10 @@ from __future__ import annotations
 
 from typing import Callable
 
-import numpy as np
-
 import horqrux
 import jax
 import jax.numpy as jnp
+import numpy as np
 import optax
 import pyqtorch as pyq
 import torch
@@ -139,7 +138,7 @@ def dqc_horqrux_adam(
                 bottom = (x, jnp.zeros_like(x))  # u(x,0)=f(x)
                 terms = jnp.dstack(list(map(jnp.hstack, [left, right, top, bottom])))
                 exp_fn = lambda xy: native_expectation_horqrux(
-                    circuit, observable, values | {"x": xy[:, 0], "y": xy[:, 1]}
+                    circuit, observable, values | {"x": xy[0], "y": xy[1]}
                 )
                 loss_left, loss_right, loss_top, loss_bottom = jax.vmap(exp_fn, in_axes=(2,))(terms)
                 loss_bottom -= jnp.sin(jnp.pi * x)
