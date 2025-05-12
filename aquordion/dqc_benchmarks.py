@@ -2,15 +2,12 @@ from __future__ import annotations
 
 from typing import Callable
 
-import horqrux
-import jax
-import optax
 import pyqtorch as pyq
 import torch
-from jax import Array
 from torch import Tensor
 from torch.nn import ParameterDict
-from .vqe_benchmarks import native_expectation_horqrux, native_expectation_pyq
+
+from .vqe_benchmarks import native_expectation_pyq
 
 VARIABLES = ("x", "y")
 N_VARIABLES = len(VARIABLES)
@@ -23,23 +20,26 @@ def dqc_pyq_adam(
     observable: pyq.Observable,
     inputs_embedded: ParameterDict,
     LR: float = 1e-2,
-    N_epochs: int = 30,) -> Callable:
+    N_epochs: int = 30,
+) -> Callable:
 
     def exp_fn(inputs: Tensor) -> Tensor:
         return native_expectation_pyq(
             circuit,
             observable,
-            {**inputs_embedded, **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]}},
+            {
+                **inputs_embedded,
+                **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
+            },
         )
-    
+
     class DomainSampling(torch.nn.Module):
         def __init__(self) -> None:
             super().__init__()
 
         def sample(self, requires_grad: bool = False) -> Tensor:
             return torch.rand((BATCH_SIZE, N_VARIABLES), requires_grad=requires_grad)
-    
-    
+
         def left_boundary(self) -> Tensor:  # u(0,y)=0
             sample = self.sample()
             sample[:, X_POS] = 0.0
@@ -76,18 +76,25 @@ def dqc_pyq_adam(
             )[0]
 
             return (dfdxxdyy[:, X_POS] + dfdxxdyy[:, Y_POS]).pow(2).mean()
-    
+
     d_sampler = DomainSampling()
 
     def opt_pyq() -> None:
         optimizer = torch.optim.Adam(inputs_embedded.values(), lr=LR, foreach=False)
+
         def loss_fn() -> Tensor:
-            return d_sampler.left_boundary() + d_sampler.right_boundary() + d_sampler.top_boundary() + d_sampler.bottom_boundary() + d_sampler.interior()
-    
+            return (
+                d_sampler.left_boundary()
+                + d_sampler.right_boundary()
+                + d_sampler.top_boundary()
+                + d_sampler.bottom_boundary()
+                + d_sampler.interior()
+            )
+
         for _ in range(N_epochs):
             optimizer.zero_grad()
             loss = loss_fn()
             loss.backward()
             optimizer.step()
-    
+
     return opt_pyq

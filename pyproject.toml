@@ -46,7 +46,7 @@ test = "pytest -n auto --ignore=tests/timings/ {args}"
 benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s tests/timings/test_timings.py"
 vqe = "pytest --benchmark-disable-gc --benchmark-json docs/stats_vqe_noshots.json -v -s tests/timings/vqe/test_noshots.py"
 vqeshots = "pytest --benchmark-disable-gc --benchmark-json docs/stats_vqe_shots.json -v -s tests/timings/vqe/test_shots.py"
-dqc = "pytest --benchmark-disable-gc --benchmark-json docs/stats_dqc.json -v -s tests/timings/dqc/test_noshots.py"
+dqc = "pytest --benchmark-disable-gc --benchmark-json docs/stats_dqc.json -v -s tests/timings/dqc/test_pde_noshots.py"
 
 
 [tool.hatch.envs.docs]
