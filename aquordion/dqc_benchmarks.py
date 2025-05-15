@@ -4,11 +4,11 @@ from typing import Callable
 
 import horqrux
 import jax
+from jax import Array
 import jax.numpy as jnp
 import optax
 import pyqtorch as pyq
 import torch
-from jax import Array
 from torch import Tensor
 from torch.nn import ParameterDict
 
@@ -27,6 +27,7 @@ def dqc_pyq_adam(
     LR: float = 1e-2,
     n_shots: int = 0,
     N_epochs: int = 30,
+    diff_mode: pyq.DiffMode = pyq.DiffMode.AD,
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/pyqtorch/latest/pde/"""
 
@@ -39,10 +40,11 @@ def dqc_pyq_adam(
             return native_expectation_pyq(
                 circuit,
                 observable,
-                {
+                inputs={
                     **inputs_embedded,
                     **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
                 },
+                diff_mode=diff_mode,
                 n_shots=n_shots,
             )
 
@@ -116,6 +118,7 @@ def dqc_horqrux_adam(
     LR: float = 1e-2,
     N_epochs: int = 30,
     n_shots: int = 0,
+    diff_mode: horqrux.DiffMode = horqrux.DiffMode.AD,
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/horqrux/latest/dqc/"""
 
@@ -138,11 +141,11 @@ def dqc_horqrux_adam(
                 right = (jnp.ones_like(y), y)  # u(L,y)=0
                 top = (x, jnp.ones_like(x))  # u(x,H)=0
                 bottom = (x, jnp.zeros_like(x))  # u(x,0)=f(x)
-                terms = jnp.dstack(list(map(jnp.hstack, [left, right, top, bottom])))
+                terms = jnp.dstack(list(map(jnp.hstack, [left, right, top, bottom]))).squeeze(0)
                 exp_fn = lambda xy: native_expectation_horqrux(
-                    circuit, observable, values | {"x": xy[0], "y": xy[1]}, n_shots=n_shots
+                    circuit, observable, values | {"x": xy[0], "y": xy[1]}, n_shots=n_shots, diff_mode=diff_mode,
                 )
-                loss_left, loss_right, loss_top, loss_bottom = jax.vmap(exp_fn, in_axes=(2,))(terms)
+                loss_left, loss_right, loss_top, loss_bottom = jax.vmap(exp_fn, in_axes=(1,))(terms)
                 loss_bottom -= jnp.sin(jnp.pi * x)
 
                 hessian = jax.hessian(exp_fn)(
