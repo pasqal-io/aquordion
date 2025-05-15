@@ -6,7 +6,10 @@ repo_name: "aquordion"
 nav:
 
   - aquordion in a Nutshell: index.md
-  - Benchmarks: benchmarks.md
+  - Benchmarks:
+    - API functions: benchmarks/api.md
+    - VQE: benchmarks/vqe.md
+    - DQC: benchmarks/dqc.md
 
 
 theme:
