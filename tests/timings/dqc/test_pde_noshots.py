@@ -32,7 +32,6 @@ def test_dqc_pyq(
     circuit = QuantumCircuit(n_qubits, ansatz)
     total_magnetization = hamiltonian_factory(n_qubits, detuning=Z)
     values = {p: torch.rand(1, requires_grad=True) for p in circuit.unique_parameters}
-    # avoid multiple conversion
     (circ, obs, embed_fn, params_conv) = bknd_pyqtorch.convert(circuit, total_magnetization)
     circ = pyq.QuantumCircuit(n_qubits, feature_map.operations + circ.native.operations)
     obs = obs[0].native
@@ -52,7 +51,6 @@ def test_dqc_horqrux(
     ]
 
     circuit = QuantumCircuit(n_qubits, ansatz)
-    # avoid multiple conversion
     (circ, _, _, _) = bknd_horqrux.convert(circuit)
     circ = horqrux.QuantumCircuit(n_qubits, feature_map + list(iter(circ.native)), ["x", "y"])
     obs = horqrux.Observable([horqrux.Z(i) for i in range(n_qubits)])
