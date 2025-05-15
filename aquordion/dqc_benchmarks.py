@@ -4,11 +4,11 @@ from typing import Callable
 
 import horqrux
 import jax
-from jax import Array
 import jax.numpy as jnp
 import optax
 import pyqtorch as pyq
 import torch
+from jax import Array
 from torch import Tensor
 from torch.nn import ParameterDict
 
@@ -143,7 +143,11 @@ def dqc_horqrux_adam(
                 bottom = (x, jnp.zeros_like(x))  # u(x,0)=f(x)
                 terms = jnp.dstack(list(map(jnp.hstack, [left, right, top, bottom]))).squeeze(0)
                 exp_fn = lambda xy: native_expectation_horqrux(
-                    circuit, observable, values | {"x": xy[0], "y": xy[1]}, n_shots=n_shots, diff_mode=diff_mode,
+                    circuit,
+                    observable,
+                    values | {"x": xy[0], "y": xy[1]},
+                    n_shots=n_shots,
+                    diff_mode=diff_mode,
                 )
                 loss_left, loss_right, loss_top, loss_bottom = jax.vmap(exp_fn, in_axes=(1,))(terms)
                 loss_bottom -= jnp.sin(jnp.pi * x)
