@@ -150,7 +150,7 @@ jobs:
           uses: actions/upload-artifact@v4
           with:
             name: dqcstats
-            path: docs/stats_dqc_noshots.json
+            path: docs/stats_dqc.json
 
   test_docs:
     name: Documentation
