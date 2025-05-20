@@ -6,7 +6,7 @@ The circuits are defined over $4, 10$ qubits $R=5$ for avoiding long jobs time o
 We also benchmark two differentiation modes (automatic differentiation and the Adjoint method [^1]).
 When using $100$ shots, we reduce the number of iterations to $5$.
 
-# VQE
+# Variational Quantum Eigensolver
 
 Here are the median execution times for VQE. We compare optimizing with `PyQTorch` against optimizing with `Horqrux` and jitting.
 
@@ -52,7 +52,7 @@ frame_vqeshots['n_shots'] = 1000
 nqubits = frame_vqe.n_qubits.unique()
 ```
 
-## Times
+## Timings
 
 Below we present the distribution of median times for each circuit type, without shots and with shots ($n_{shots} = 100$).
 

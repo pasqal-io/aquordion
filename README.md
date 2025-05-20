@@ -28,7 +28,10 @@ hatch -e tests run vqe
 hatch -e tests run vqeshots
 ```
 
-### DQC functions
+### Differentiable Quantum Circuit (DQC) functions
+
+Differentiable Quantum Circuit ([DQC](https://arxiv.org/abs/2011.10395)) is an algorithm that uses parametererized quantum circuits considered differentiable
+for solving tasks such as function fitting or solving differential equations.
 
 Run the following commands to generate timings for the DQC case:
 ```bash

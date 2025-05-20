@@ -6,9 +6,9 @@ The example is taken from the `pyqtorch` and `horqrux` documentation.
 The circuits are defined over $4, 10$ qubits $R=5$ for avoiding long jobs time on Github.
 
 
-# DQC
+# Differential Quantum Circuit
 
-Here are the median execution times for VQE. We compare optimizing with `PyQTorch` against optimizing with `Horqrux` and jitting.
+Here are the median execution times for DQC. We compare optimizing with `PyQTorch` against optimizing with `Horqrux` and jitting.
 
 ```python exec="on" source="material-block" session="benchmarks"
 
@@ -32,7 +32,7 @@ frame_vqe['name'] = frame_vqe['name'].str.replace('dqc_', '')
 nqubits = frame_vqe.n_qubits.unique()
 ```
 
-## Times
+## Timings
 
 Below we present the distribution of median times for each number of qubits.
 
