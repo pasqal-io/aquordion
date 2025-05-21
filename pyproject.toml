@@ -46,7 +46,7 @@ test = "pytest -n auto --ignore=tests/timings/ {args}"
 benchmarks = "pytest --benchmark-disable-gc --benchmark-json docs/stats.json -v -s tests/timings/test_timings.py"
 vqe = "pytest --benchmark-disable-gc --benchmark-json docs/stats_vqe_noshots.json -v -s tests/timings/vqe/test_noshots.py"
 vqeshots = "pytest --benchmark-disable-gc --benchmark-json docs/stats_vqe_shots.json -v -s tests/timings/vqe/test_shots.py"
-
+dqc = "pytest --benchmark-disable-gc --benchmark-json docs/stats_dqc.json -v -s tests/timings/dqc/test_pde_noshots.py"
 
 [tool.hatch.envs.docs]
 installer = "uv"
@@ -72,20 +72,20 @@ build = "mkdocs build --clean --strict"
 serve = "mkdocs serve --dev-addr localhost:8000"
 
 [tool.ruff]
-select = ["E", "F", "I", "Q"]
-extend-ignore = ["F841", "F403", "E731", "E741"]
+lint.select = ["E", "F", "I", "Q"]
+lint.extend-ignore = ["F841", "F403", "E731", "E741"]
 line-length = 120
 
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 required-imports = ["from __future__ import annotations"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "E402"]
 
-[tool.ruff.mccabe]
+[tool.ruff.lint.mccabe]
 max-complexity = 15
 
-[tool.ruff.flake8-quotes]
+[tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 
 [tool.black]

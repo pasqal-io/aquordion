@@ -5,7 +5,7 @@ import random
 from typing import Any, Callable
 
 import pytest
-from qadence import CNOT, MCZ, RX, RY, RZ, AbstractBlock, H, I, QuantumCircuit, X, Y, Z, chain
+from qadence import CNOT, MCZ, RX, RY, RZ, AbstractBlock, H, I, QuantumCircuit, X, Y, Z, chain, hea
 
 N_qubits_list = [
     2,
@@ -118,6 +118,22 @@ ids_vqe_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_vqe_benchmark
     ids=ids_vqe_benchmarks,
 )
 def benchmark_vqe_ansatz(
+    request: pytest.Fixture,
+) -> Any:
+    return request.param
+
+
+@pytest.fixture(
+    params=list(
+        itertools.product(
+            [hea],
+            N_qubits_list_vqe,
+            N_layers_list,
+        ),
+    ),
+    ids=[f"HEA n:{id[0]} D:{id[1]}" for id in itertools.product(N_qubits_list_vqe, N_layers_list)],
+)
+def benchmark_dqc_ansatz(
     request: pytest.Fixture,
 ) -> Any:
     return request.param
