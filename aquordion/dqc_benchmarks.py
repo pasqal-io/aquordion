@@ -20,6 +20,86 @@ X_POS, Y_POS = [i for i in range(N_VARIABLES)]
 BATCH_SIZE = 250
 
 
+class DomainSampling(torch.nn.Module):
+    """Class for solving with pyqtorch a Laplace equation using a parametrized quantum circuit (PQC) and an observable.
+    When passing as inputs points from a domain of definition of the equation,
+    the output expectations are considered outputs of a function.
+    As the model (PQC + observable) can be differentiated, we can learn how well it
+    fits the system of equations forming the Laplace.
+
+    As inputs, we sample from a square domain and compute the loss as a sum of
+    interior points contributions and the boundary conditions.
+
+    """
+
+    def __init__(
+        self,
+        circuit: pyq.QuantumCircuit,
+        observable: pyq.Observable,
+        inputs_embedded: ParameterDict,
+        n_shots: int = 0,
+        diff_mode: pyq.DiffMode = pyq.DiffMode.AD,
+    ) -> None:
+        super().__init__()
+        self.circuit = circuit
+        self.observable = observable
+        self.inputs_embedded = inputs_embedded
+        self.n_shots = n_shots
+        self.diff_mode = diff_mode
+
+    def exp_fn(self, inputs: Tensor) -> Tensor:
+        return native_expectation_pyq(
+            self.circuit,
+            self.observable,
+            inputs={
+                **self.inputs_embedded,
+                **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
+            },
+            diff_mode=self.diff_mode,
+            n_shots=self.n_shots,
+        )
+
+    def sample(self, requires_grad: bool = False) -> Tensor:
+        return torch.rand((BATCH_SIZE, N_VARIABLES), requires_grad=requires_grad)
+
+    def left_boundary(self) -> Tensor:  # u(0,y)=0
+        sample = self.sample()
+        sample[:, X_POS] = 0.0
+        return self.exp_fn(sample).pow(2).mean()
+
+    def right_boundary(self) -> Tensor:  # u(L,y)=0
+        sample = self.sample()
+        sample[:, X_POS] = 1.0
+        return self.exp_fn(sample).pow(2).mean()
+
+    def top_boundary(self) -> Tensor:  # u(x,H)=0
+        sample = self.sample()
+        sample[:, Y_POS] = 1.0
+        return self.exp_fn(sample).pow(2).mean()
+
+    def bottom_boundary(self) -> Tensor:  # u(x,0)=f(x)
+        sample = self.sample()
+        sample[:, Y_POS] = 0.0
+        return (self.exp_fn(sample) - torch.sin(torch.pi * sample[:, 0])).pow(2).mean()
+
+    def interior(self) -> Tensor:  # uxx+uyy=0
+        sample = self.sample(requires_grad=True)
+        exp_eval = self.exp_fn(sample)
+        dfdxy = torch.autograd.grad(
+            exp_eval,
+            sample,
+            torch.ones_like(exp_eval),
+            create_graph=True,
+        )[0]
+        dfdxxdyy = torch.autograd.grad(
+            dfdxy,
+            sample,
+            torch.ones_like(dfdxy),
+        )[0]
+
+        return (dfdxxdyy[:, X_POS] + dfdxxdyy[:, Y_POS]).pow(2).mean()
+
+
 def dqc_pyq_adam(
     circuit: pyq.QuantumCircuit,
     observable: pyq.Observable,
@@ -31,64 +111,7 @@ def dqc_pyq_adam(
 ) -> Callable:
     """Taken from https://pasqal-io.github.io/pyqtorch/latest/pde/"""
 
-    class DomainSampling(torch.nn.Module):
-
-        def __init__(self) -> None:
-            super().__init__()
-
-        def exp_fn(self, inputs: Tensor) -> Tensor:
-            return native_expectation_pyq(
-                circuit,
-                observable,
-                inputs={
-                    **inputs_embedded,
-                    **{VARIABLES[X_POS]: inputs[:, X_POS], VARIABLES[Y_POS]: inputs[:, Y_POS]},
-                },
-                diff_mode=diff_mode,
-                n_shots=n_shots,
-            )
-
-        def sample(self, requires_grad: bool = False) -> Tensor:
-            return torch.rand((BATCH_SIZE, N_VARIABLES), requires_grad=requires_grad)
-
-        def left_boundary(self) -> Tensor:  # u(0,y)=0
-            sample = self.sample()
-            sample[:, X_POS] = 0.0
-            return self.exp_fn(sample).pow(2).mean()
-
-        def right_boundary(self) -> Tensor:  # u(L,y)=0
-            sample = self.sample()
-            sample[:, X_POS] = 1.0
-            return self.exp_fn(sample).pow(2).mean()
-
-        def top_boundary(self) -> Tensor:  # u(x,H)=0
-            sample = self.sample()
-            sample[:, Y_POS] = 1.0
-            return self.exp_fn(sample).pow(2).mean()
-
-        def bottom_boundary(self) -> Tensor:  # u(x,0)=f(x)
-            sample = self.sample()
-            sample[:, Y_POS] = 0.0
-            return (self.exp_fn(sample) - torch.sin(torch.pi * sample[:, 0])).pow(2).mean()
-
-        def interior(self) -> Tensor:  # uxx+uyy=0
-            sample = self.sample(requires_grad=True)
-            exp_eval = self.exp_fn(sample)
-            dfdxy = torch.autograd.grad(
-                exp_eval,
-                sample,
-                torch.ones_like(exp_eval),
-                create_graph=True,
-            )[0]
-            dfdxxdyy = torch.autograd.grad(
-                dfdxy,
-                sample,
-                torch.ones_like(dfdxy),
-            )[0]
-
-            return (dfdxxdyy[:, X_POS] + dfdxxdyy[:, Y_POS]).pow(2).mean()
-
-    d_sampler = DomainSampling()
+    d_sampler = DomainSampling(circuit, observable, inputs_embedded, n_shots, diff_mode)
 
     def opt_pyq() -> None:
         optimizer = torch.optim.Adam(inputs_embedded.values(), lr=LR, foreach=False)
@@ -137,6 +160,8 @@ def dqc_horqrux_adam(
             def pde_loss(x: Array, y: Array) -> Array:
                 x = x.reshape(-1, 1)
                 y = y.reshape(-1, 1)
+
+                # boundary conditions loss terms are calculated below
                 left = (jnp.zeros_like(y), y)  # u(0,y)=0
                 right = (jnp.ones_like(y), y)  # u(L,y)=0
                 top = (x, jnp.ones_like(x))  # u(x,H)=0
