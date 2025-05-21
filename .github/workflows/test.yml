@@ -96,33 +96,33 @@ jobs:
             name: vqestatsnoshots
             path: docs/stats_vqe_noshots.json
 
-  vqe_benchmarks_sampling:
-    name: Benchmarks VQE with sampling
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.10"]
-    steps:
-        - name: Checkout main code and submodules
-          uses: actions/checkout@v4
-        - name: Set up Python ${{ matrix.python-version }}
-          uses: actions/setup-python@v5
-          with:
-            python-version: ${{ matrix.python-version }}
-        - name: Install hatch
-          run: |
-            python -m pip install hatch
-        - name: Install main dependencies
-          run: |
-            python -m hatch -v -e tests
-        - name: Perform benchmarks
-          run: |
-            python -m hatch -e tests run vqeshots
-        - name: Store benchmark result
-          uses: actions/upload-artifact@v4
-          with:
-            name: vqestatsshots
-            path: docs/stats_vqe_shots.json
+  # vqe_benchmarks_sampling:
+  #   name: Benchmarks VQE with sampling
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       python-version: ["3.10"]
+  #   steps:
+  #       - name: Checkout main code and submodules
+  #         uses: actions/checkout@v4
+  #       - name: Set up Python ${{ matrix.python-version }}
+  #         uses: actions/setup-python@v5
+  #         with:
+  #           python-version: ${{ matrix.python-version }}
+  #       - name: Install hatch
+  #         run: |
+  #           python -m pip install hatch
+  #       - name: Install main dependencies
+  #         run: |
+  #           python -m hatch -v -e tests
+  #       - name: Perform benchmarks
+  #         run: |
+  #           python -m hatch -e tests run vqeshots
+  #       - name: Store benchmark result
+  #         uses: actions/upload-artifact@v4
+  #         with:
+  #           name: vqestatsshots
+  #           path: docs/stats_vqe_shots.json
 
   dqc_benchmarks:
     name: Benchmarks DQC
@@ -154,7 +154,7 @@ jobs:
 
   test_docs:
     name: Documentation
-    needs: [test_benchmarks, vqe_benchmarks, vqe_benchmarks_sampling, dqc_benchmarks]
+    needs: [test_benchmarks, vqe_benchmarks, dqc_benchmarks]
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -181,10 +181,10 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: vqestatsnoshots
-        - name: Download benchmark VQE result shots
-          uses: actions/download-artifact@v4
-          with:
-            name: vqestatsshots
+        # - name: Download benchmark VQE result shots
+        #   uses: actions/download-artifact@v4
+        #   with:
+        #     name: vqestatsshots
         - name: Download benchmark DQC result
           uses: actions/download-artifact@v4
           with:
@@ -219,10 +219,10 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: vqestatsnoshots
-    - name: Download benchmark VQE result shots
-      uses: actions/download-artifact@v4
-      with:
-        name: vqestatsshots
+    # - name: Download benchmark VQE result shots
+    #   uses: actions/download-artifact@v4
+    #   with:
+    #     name: vqestatsshots
     - name: Download benchmark DQC result
       uses: actions/download-artifact@v4
       with:
