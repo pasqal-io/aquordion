@@ -17,6 +17,7 @@ from aquordion.api_benchmarks import (
 from aquordion.vqe_benchmarks import vqe_horqrux_adam, vqe_pyq_adam
 
 
+@pytest.mark.timeout(10)
 def test_vqe_pyq(
     benchmark: pytest.Fixture,
     benchmark_vqe_ansatz: tuple[Callable, int, int],
@@ -25,7 +26,6 @@ def test_vqe_pyq(
     fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
-    # avoid multiple conversion
     (circ, obs, embed_fn, params_conv) = bknd_pyqtorch.convert(circuit, h2_hamiltonian)
     values = {p: torch.rand(1, requires_grad=True) for p in params}
 
@@ -34,11 +34,12 @@ def test_vqe_pyq(
     inputs_embedded = ParameterDict({p: v for p, v in embed_fn(params_conv, values).items()})
 
     opt_pyq = vqe_pyq_adam(
-        circ, obs, inputs_embedded, diff_mode=pyqtorch.DiffMode.GPSR, n_shots=100, N_epochs=5
+        circ, obs, inputs_embedded, diff_mode=pyqtorch.DiffMode.GPSR, n_shots=100, N_epochs=10
     )
     benchmark.pedantic(opt_pyq, rounds=5)
 
 
+@pytest.mark.timeout(10)
 def test_vqe_horqrux(
     benchmark: pytest.Fixture,
     benchmark_vqe_ansatz: tuple[Callable, int, int],
@@ -47,7 +48,6 @@ def test_vqe_horqrux(
     fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, _ = fn_circuit(n_qubits, n_layers)
 
-    # avoid multiple conversion
     (circ, obs, _, _) = bknd_horqrux.convert(circuit, h2_hamiltonian)
 
     ansatz = horqrux.QuantumCircuit(circ.native.n_qubits, list(iter(circ.native)))
@@ -63,7 +63,7 @@ def test_vqe_horqrux(
         init_param_vals,
         diff_mode=horqrux.DiffMode.GPSR,
         n_shots=100,
-        N_epochs=5,
+        N_epochs=10,
     )
 
     benchmark.pedantic(opt_horqux, rounds=5)
