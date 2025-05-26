@@ -42,24 +42,24 @@ def test_dqc_pyq(
     benchmark.pedantic(opt_pyq, rounds=5)
 
 
-# def test_dqc_horqrux(
-#     benchmark: pytest.Fixture,
-#     benchmark_dqc_ansatz: tuple[Callable, int, int],
-# ) -> None:
-#     fn_circuit, n_qubits, n_layers = benchmark_dqc_ansatz
-#     ansatz = fn_circuit(n_qubits, n_layers)
-#     feature_map = [horqrux.RX("x", i) for i in range(n_qubits // 2)] + [
-#         horqrux.RX("y", i) for i in range(n_qubits // 2, n_qubits)
-#     ]
+def test_dqc_horqrux(
+    benchmark: pytest.Fixture,
+    benchmark_dqc_ansatz: tuple[Callable, int, int],
+) -> None:
+    fn_circuit, n_qubits, n_layers = benchmark_dqc_ansatz
+    ansatz = fn_circuit(n_qubits, n_layers)
+    feature_map = [horqrux.RX("x", i) for i in range(n_qubits // 2)] + [
+        horqrux.RX("y", i) for i in range(n_qubits // 2, n_qubits)
+    ]
 
-#     circuit = QuantumCircuit(n_qubits, ansatz)
-#     # avoid multiple conversion
-#     (circ, _, _, _) = bknd_horqrux.convert(circuit)
-#     circ = horqrux.QuantumCircuit(n_qubits, feature_map + list(iter(circ.native)), ["x", "y"])
-#     obs = horqrux.Observable([horqrux.Z(i) for i in range(n_qubits)])
+    circuit = QuantumCircuit(n_qubits, ansatz)
+    # avoid multiple conversion
+    (circ, _, _, _) = bknd_horqrux.convert(circuit)
+    circ = horqrux.QuantumCircuit(n_qubits, feature_map + list(iter(circ.native)), ["x", "y"])
+    obs = horqrux.Observable([horqrux.Z(i) for i in range(n_qubits)])
 
-#     key = jax.random.PRNGKey(42)
-#     init_param_vals = jax.random.uniform(key, shape=(circ.n_vparams,))
+    key = jax.random.PRNGKey(42)
+    init_param_vals = jax.random.uniform(key, shape=(circ.n_vparams,))
 
-#     opt_horqux = dqc_horqrux_adam(circ, obs, init_param_vals, N_epochs=5, n_shots=1000, diff_mode=horqrux.DiffMode.GPSR)
-#     benchmark.pedantic(opt_horqux, rounds=5)
+    opt_horqux = dqc_horqrux_adam(circ, obs, init_param_vals, N_epochs=5, n_shots=100, diff_mode=horqrux.DiffMode.GPSR)
+    benchmark.pedantic(opt_horqux, rounds=5)
