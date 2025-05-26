@@ -27,7 +27,6 @@ def test_vqe_pyq(
     fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, params = fn_circuit(n_qubits, n_layers)
     torch.manual_seed(0)
-    # avoid multiple conversion
     (circ, obs, embed_fn, params_conv) = bknd_pyqtorch.convert(circuit, h2_hamiltonian)
     values = {p: torch.rand(1, requires_grad=True) for p in params}
 
@@ -48,8 +47,6 @@ def test_vqe_horqrux(
 ) -> None:
     fn_circuit, n_qubits, n_layers = benchmark_vqe_ansatz
     circuit, _ = fn_circuit(n_qubits, n_layers)
-
-    # avoid multiple conversion
     (circ, obs, _, _) = bknd_horqrux.convert(circuit, h2_hamiltonian)
 
     ansatz = horqrux.QuantumCircuit(circ.native.n_qubits, list(iter(circ.native)))
