@@ -38,7 +38,9 @@ def test_dqc_pyq(
     circ = pyq.QuantumCircuit(n_qubits, feature_map.operations + circ.native.operations)
     obs = obs[0].native
     inputs_embedded = ParameterDict({p: v for p, v in embed_fn(params_conv, values).items()})
-    opt_pyq = dqc_pyq_adam(circ, obs, inputs_embedded, N_epochs=5, n_shots=100, diff_mode=pyq.DiffMode.GPSR)
+    opt_pyq = dqc_pyq_adam(
+        circ, obs, inputs_embedded, N_epochs=5, n_shots=100, diff_mode=pyq.DiffMode.GPSR
+    )
     benchmark.pedantic(opt_pyq, rounds=5)
 
 
@@ -61,5 +63,7 @@ def test_dqc_horqrux(
     key = jax.random.PRNGKey(42)
     init_param_vals = jax.random.uniform(key, shape=(circ.n_vparams,))
 
-    opt_horqux = dqc_horqrux_adam(circ, obs, init_param_vals, N_epochs=5, n_shots=100, diff_mode=horqrux.DiffMode.GPSR)
+    opt_horqux = dqc_horqrux_adam(
+        circ, obs, init_param_vals, N_epochs=5, n_shots=100, diff_mode=horqrux.DiffMode.GPSR
+    )
     benchmark.pedantic(opt_horqux, rounds=5)
