@@ -3,7 +3,7 @@
 In this section, we benchmark between backends to solve a partial differential equation using a Differential Quantum Circuit ([DQC](https://arxiv.org/abs/2011.10395)). The underlying ansatz is the hardware-efficient-ansatz.
 The underlying gradient-based Adam optimizer is run for $15$ iterations.
 The example is taken from the `pyqtorch` and `horqrux` documentation.
-The circuits are defined over $4, 8$ qubits $R=5$ for avoiding long jobs time on Github.
+The circuits are defined over $4, 6$ qubits $R=5$ for avoiding long jobs time on Github.
 
 
 # Differential Quantum Circuit
