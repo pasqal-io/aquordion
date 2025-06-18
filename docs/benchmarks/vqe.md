@@ -1,7 +1,7 @@
 # Stats
 
 We generate timing statistics using `pytest-benchmark` using $R$ rounds for circuits A, B, C [^1] as ansatze for a variational quantum eigensolver task[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3].
-The underlying gradient-based Adam optimizer is run for $100$ iterations without shots and $50$ when using shots.
+The underlying gradient-based Adam optimizer is run for $50$ iterations without shots and $25$ when using shots.
 The circuits are defined over $4, 10$ qubits $R=5$ for avoiding long jobs time on Github.
 Additionally, we benchmark two differentiation modes (automatic differentiation and the Adjoint method [^1]).
 Finally, we also performing shot-based benchmarks, we use $100$ shots.

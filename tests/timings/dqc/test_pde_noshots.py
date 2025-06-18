@@ -16,7 +16,7 @@ from aquordion.api_benchmarks import (
 )
 from aquordion.dqc_benchmarks import dqc_horqrux_adam, dqc_pyq_adam
 
-N_epochs = 50
+N_epochs = 25
 
 
 def test_dqc_pyq(

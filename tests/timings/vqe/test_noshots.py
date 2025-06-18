@@ -16,7 +16,7 @@ from aquordion.api_benchmarks import (
 )
 from aquordion.vqe_benchmarks import vqe_horqrux_adam, vqe_pyq_adam
 
-N_epochs = 100
+N_epochs = 50
 
 
 @pytest.mark.parametrize("diff_mode", [pyq.DiffMode.AD, pyq.DiffMode.ADJOINT])

@@ -16,7 +16,7 @@ from aquordion.api_benchmarks import (
 )
 from aquordion.vqe_benchmarks import vqe_horqrux_adam, vqe_pyq_adam
 
-N_epochs_shots = 30
+N_epochs_shots = 25
 n_shots = 100
 
 
