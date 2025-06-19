@@ -16,6 +16,9 @@ from aquordion.api_benchmarks import (
 )
 from aquordion.vqe_benchmarks import vqe_horqrux_adam, vqe_pyq_adam
 
+N_epochs_shots = 10
+n_shots = 100
+
 
 @pytest.mark.timeout(10)
 def test_vqe_pyq(
@@ -34,7 +37,12 @@ def test_vqe_pyq(
     inputs_embedded = ParameterDict({p: v for p, v in embed_fn(params_conv, values).items()})
 
     opt_pyq = vqe_pyq_adam(
-        circ, obs, inputs_embedded, diff_mode=pyqtorch.DiffMode.GPSR, n_shots=100, N_epochs=10
+        circ,
+        obs,
+        inputs_embedded,
+        diff_mode=pyqtorch.DiffMode.GPSR,
+        n_shots=n_shots,
+        N_epochs=N_epochs_shots,
     )
     benchmark.pedantic(opt_pyq, rounds=5)
 
@@ -62,8 +70,8 @@ def test_vqe_horqrux(
         observable,
         init_param_vals,
         diff_mode=horqrux.DiffMode.GPSR,
-        n_shots=100,
-        N_epochs=10,
+        n_shots=n_shots,
+        N_epochs=N_epochs_shots,
     )
 
     benchmark.pedantic(opt_horqux, rounds=5)

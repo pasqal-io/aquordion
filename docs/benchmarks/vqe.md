@@ -1,10 +1,10 @@
 # Stats
 
-We generate timing statistics using `pytest-benchmark` using $R$ rounds for circuits A, B, C [^1] as ansatze for a variational quantum eigensolver task[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3].
-The underlying gradient-based Adam optimizer is run for $30$ iterations.
+We generate timing statistics using `pytest-benchmark` using $R$ rounds for circuits of type A [^1] as ansatze for a variational quantum eigensolver task[^2] (VQE) for the $H2$ molecule in the STO-3G basis with a bondlength of $0.742 \mathring{A}$[^3].
+The underlying gradient-based Adam optimizer is run for $50$ iterations without shots and $10$ when using shots.
 The circuits are defined over $4, 6$ qubits $R=5$ for avoiding long jobs time on Github.
 Additionally, we benchmark two differentiation modes (automatic differentiation and the Adjoint method [^1]).
-Finally, we also performing shot-based benchmarks, we use $100$ shots, and $10$ Adam iterations.
+Finally, we also performing shot-based benchmarks, we use $100$ shots.
 
 Note we are disabling shots due to an issue.
 
@@ -61,7 +61,7 @@ Below we present the distribution of median times for each circuit type, with an
 ```python exec="on" source="material-block" session="benchmarks"
 for nq in nqubits:
     axes = frame_vqe[frame_vqe.n_qubits == nq].boxplot('median', by=['fn_circuit', 'name', 'diff_mode'])
-    axes.set_title(f"Timing distributions by differentiation methods and circuit \n without shots - 30 epochs - {nq} qubits")
+    axes.set_title(f"Timing distributions by differentiation methods and circuit \n without shots - {nq} qubits")
     axes.set_xlabel('')
     axes.set_ylabel('Time (s)')
     plt.xticks(rotation=75)
@@ -72,7 +72,7 @@ for nq in nqubits:
 
 
     axes = frame_vqeshots[frame_vqeshots.n_qubits == nq].boxplot('median', by=['fn_circuit', 'name'])
-    axes.set_title(f"Timing distributions by differentiation methods and circuit \n with shots - 10 epochs - {nq} qubits")
+    axes.set_title(f"Timing distributions by differentiation methods and circuit \n with shots - {nq} qubits")
     axes.set_xlabel('')
     axes.set_ylabel('Time (s)')
     plt.xticks(rotation=75)
@@ -97,7 +97,7 @@ ratio_df['ratio'] = ratio_df['median_pyq'] / ratio_df['median_horqrux']
 
 
 axes = ratio_df[ratio_df.n_shots == 0].boxplot('ratio', by=['fn_circuit', 'diff_mode', 'n_qubits'])
-axes.set_title(f"Speedup distributions by circuit and qubit number without shots \n 30 epochs ")
+axes.set_title(f"Speedup distributions by circuit and qubit number without shots")
 axes.set_xlabel('')
 axes.set_ylabel('Speedup')
 plt.xticks(rotation=75)
@@ -107,7 +107,7 @@ print(fig_to_html(plt.gcf())) # markdown-exec: hide
 
 
 axes = ratio_df[ratio_df.n_shots > 0].boxplot('ratio', by=['fn_circuit', 'n_qubits'])
-axes.set_title(f"Speedup distributions by circuit and qubit number with shots \n 10 epochs")
+axes.set_title(f"Speedup distributions by circuit and qubit number with shots")
 axes.set_xlabel('')
 axes.set_ylabel('Speedup')
 plt.xticks(rotation=75)

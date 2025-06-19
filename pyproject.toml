@@ -25,12 +25,12 @@ classifiers=[
     "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
-    "qadence[horqrux]==1.11.4",
+    "qadence[horqrux]==1.11.5",
 ]
 
 
 [project.optional-dependencies]
-dev = ["black", "pytest", "pytest-xdist", "pytest-cov", "flake8", "mypy", "pre-commit", "ruff", "hypothesis", "pytest-benchmark[histogram]"]
+dev = ["black", "pytest", "pytest-xdist", "pytest-cov", "flake8", "mypy", "pre-commit", "ruff", "hypothesis", "pytest-benchmark"]
 
 [tool.hatch.envs.default]
 installer = "uv"
