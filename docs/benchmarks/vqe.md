@@ -61,7 +61,7 @@ Below we present the distribution of median times for each circuit type, with an
 ```python exec="on" source="material-block" session="benchmarks"
 for nq in nqubits:
     axes = frame_vqe[frame_vqe.n_qubits == nq].boxplot('median', by=['fn_circuit', 'name', 'diff_mode'])
-    axes.set_title(f"Timing distributions by differentiation methods and circuit \n without shots - 100 epochs - {nq} qubits")
+    axes.set_title(f"Timing distributions by differentiation methods and circuit \n without shots - {nq} qubits")
     axes.set_xlabel('')
     axes.set_ylabel('Time (s)')
     plt.xticks(rotation=75)
@@ -72,7 +72,7 @@ for nq in nqubits:
 
 
     axes = frame_vqeshots[frame_vqeshots.n_qubits == nq].boxplot('median', by=['fn_circuit', 'name'])
-    axes.set_title(f"Timing distributions by differentiation methods and circuit \n with shots - 50 epochs - {nq} qubits")
+    axes.set_title(f"Timing distributions by differentiation methods and circuit \n with shots - {nq} qubits")
     axes.set_xlabel('')
     axes.set_ylabel('Time (s)')
     plt.xticks(rotation=75)
@@ -97,7 +97,7 @@ ratio_df['ratio'] = ratio_df['median_pyq'] / ratio_df['median_horqrux']
 
 
 axes = ratio_df[ratio_df.n_shots == 0].boxplot('ratio', by=['fn_circuit', 'diff_mode', 'n_qubits'])
-axes.set_title(f"Speedup distributions by circuit and qubit number without shots \n 100 epochs ")
+axes.set_title(f"Speedup distributions by circuit and qubit number without shots")
 axes.set_xlabel('')
 axes.set_ylabel('Speedup')
 plt.xticks(rotation=75)
@@ -107,7 +107,7 @@ print(fig_to_html(plt.gcf())) # markdown-exec: hide
 
 
 axes = ratio_df[ratio_df.n_shots > 0].boxplot('ratio', by=['fn_circuit', 'n_qubits'])
-axes.set_title(f"Speedup distributions by circuit and qubit number with shots \n 50 epochs")
+axes.set_title(f"Speedup distributions by circuit and qubit number with shots")
 axes.set_xlabel('')
 axes.set_ylabel('Speedup')
 plt.xticks(rotation=75)
