@@ -98,7 +98,13 @@ ids_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_benchmarks]
 
 
 ids_vqe_benchmarks: list = list(
-    itertools.product(["circuit_A", "circuit_B"], N_qubits_list_vqe, N_layers_list)
+    itertools.product(
+        [
+            "circuit_A",
+        ],
+        N_qubits_list_vqe,
+        N_layers_list,
+    )
 )
 ids_vqe_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_vqe_benchmarks]
 
@@ -108,7 +114,6 @@ ids_vqe_benchmarks = [f"{id[0]} n:{id[1]} D:{id[2]}" for id in ids_vqe_benchmark
         itertools.product(
             [
                 circuit_A,
-                circuit_B,
             ],
             N_qubits_list_vqe,
             N_layers_list,
