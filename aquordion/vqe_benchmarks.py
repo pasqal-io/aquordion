@@ -110,5 +110,6 @@ def vqe_horqrux_adam(
         param_vals = inputs.clone()
         opt_state = optimizer.init(param_vals)
         param_vals, opt_state = jax.lax.fori_loop(0, N_epochs, train_step, (param_vals, opt_state))
+        param_vals = jax.block_until_ready(param_vals)
 
     return opt_horqux

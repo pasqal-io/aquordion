@@ -1,0 +1,619 @@
+{
+    "machine_info": {
+        "node": "nl-psq-031.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 17.0.0 (clang-1700.0.13.3)",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.12.9",
+        "python_version": "3.12.9",
+        "python_build": [
+            "main",
+            "Apr  2 2025 15:34:17"
+        ],
+        "release": "24.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.12.9.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 12,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M3 Pro"
+        }
+    },
+    "commit_info": {
+        "id": "5a761465fcf4e75f8c6dbed3cd58e9a7d6e0b223",
+        "time": "2025-05-07T19:27:30+02:00",
+        "author_time": "2025-05-07T19:27:30+02:00",
+        "dirty": true,
+        "project": "aquordion",
+        "branch": "cm/vqe_diff_shots"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_vqe_pyq[circuit_A n:10 D:2]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_pyq[circuit_A n:10 D:2]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_A at 0x10538c680>]",
+                    10,
+                    2
+                ]
+            },
+            "param": "circuit_A n:10 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 20.86493541696109,
+                "max": 21.30065929191187,
+                "mean": 21.05951588335447,
+                "stddev": 0.1654412357181487,
+                "rounds": 5,
+                "median": 21.068247416988015,
+                "iqr": 0.2244725000928156,
+                "q1": 20.93236457265448,
+                "q3": 21.156837072747294,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 20.86493541696109,
+                "hd15iqr": 21.30065929191187,
+                "ops": 0.04748447236578711,
+                "total": 105.29757941677235,
+                "data": [
+                    21.30065929191187,
+                    20.86493541696109,
+                    20.954840957885608,
+                    21.068247416988015,
+                    21.10889633302577
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_pyq[circuit_A n:10 D:5]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_pyq[circuit_A n:10 D:5]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_A at 0x10538c680>]",
+                    10,
+                    5
+                ]
+            },
+            "param": "circuit_A n:10 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 21.084176750155166,
+                "max": 21.913270458113402,
+                "mean": 21.32281895861961,
+                "stddev": 0.33845111291398333,
+                "rounds": 5,
+                "median": 21.17793545895256,
+                "iqr": 0.3144640208920464,
+                "q1": 21.131965937791392,
+                "q3": 21.44642995868344,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 21.084176750155166,
+                "hd15iqr": 21.913270458113402,
+                "ops": 0.04689811426625449,
+                "total": 106.61409479309805,
+                "data": [
+                    21.17793545895256,
+                    21.084176750155166,
+                    21.147895667003468,
+                    21.913270458113402,
+                    21.29081645887345
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_pyq[circuit_B n:10 D:2]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_pyq[circuit_B n:10 D:2]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_B at 0x1213a5800>]",
+                    10,
+                    2
+                ]
+            },
+            "param": "circuit_B n:10 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 21.01042174990289,
+                "max": 21.249467541929334,
+                "mean": 21.149134366726503,
+                "stddev": 0.09694352969000872,
+                "rounds": 5,
+                "median": 21.16056420886889,
+                "iqr": 0.15337919833837077,
+                "q1": 21.077753437159117,
+                "q3": 21.231132635497488,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 21.01042174990289,
+                "hd15iqr": 21.249467541929334,
+                "ops": 0.047283259099875,
+                "total": 105.74567183363251,
+                "data": [
+                    21.249467541929334,
+                    21.100197332911193,
+                    21.16056420886889,
+                    21.225021000020206,
+                    21.01042174990289
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_pyq[circuit_B n:10 D:5]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_pyq[circuit_B n:10 D:5]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_B at 0x1213a5800>]",
+                    10,
+                    5
+                ]
+            },
+            "param": "circuit_B n:10 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 21.08182149985805,
+                "max": 21.424956667004153,
+                "mean": 21.23246353357099,
+                "stddev": 0.12561879689591482,
+                "rounds": 5,
+                "median": 21.235776792047545,
+                "iqr": 0.13712251058313996,
+                "q1": 21.152197031420656,
+                "q3": 21.289319542003796,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 21.08182149985805,
+                "hd15iqr": 21.424956667004153,
+                "ops": 0.047097690685722074,
+                "total": 106.16231766785495,
+                "data": [
+                    21.424956667004153,
+                    21.235776792047545,
+                    21.244107167003676,
+                    21.175655541941524,
+                    21.08182149985805
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_pyq[circuit_C n:10 D:2]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_pyq[circuit_C n:10 D:2]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_C at 0x1213a6e80>]",
+                    10,
+                    2
+                ]
+            },
+            "param": "circuit_C n:10 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 20.974384709028527,
+                "max": 21.338546582963318,
+                "mean": 21.178605433460326,
+                "stddev": 0.1376813290985664,
+                "rounds": 5,
+                "median": 21.15869920910336,
+                "iqr": 0.17375259409891441,
+                "q1": 21.11026386427693,
+                "q3": 21.284016458375845,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 20.974384709028527,
+                "hd15iqr": 21.338546582963318,
+                "ops": 0.04721746212902613,
+                "total": 105.89302716730163,
+                "data": [
+                    21.15869920910336,
+                    20.974384709028527,
+                    21.1555569160264,
+                    21.26583975018002,
+                    21.338546582963318
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_pyq[circuit_C n:10 D:5]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_pyq[circuit_C n:10 D:5]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_C at 0x1213a6e80>]",
+                    10,
+                    5
+                ]
+            },
+            "param": "circuit_C n:10 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 20.828209792030975,
+                "max": 21.239241415867582,
+                "mean": 21.0922865500208,
+                "stddev": 0.17863853488758785,
+                "rounds": 5,
+                "median": 21.183103583054617,
+                "iqr": 0.2793536251410842,
+                "q1": 20.947833823098335,
+                "q3": 21.22718744823942,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 20.828209792030975,
+                "hd15iqr": 21.239241415867582,
+                "ops": 0.047410696684234734,
+                "total": 105.461432750104,
+                "data": [
+                    21.183103583054617,
+                    21.239241415867582,
+                    20.98770850012079,
+                    21.223169459030032,
+                    20.828209792030975
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_horqrux[circuit_A n:10 D:2]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_horqrux[circuit_A n:10 D:2]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_A at 0x10538c680>]",
+                    10,
+                    2
+                ]
+            },
+            "param": "circuit_A n:10 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.4140226668678224,
+                "max": 0.4777854159474373,
+                "mean": 0.4284113414119929,
+                "stddev": 0.02764544579564319,
+                "rounds": 5,
+                "median": 0.41674716607667506,
+                "iqr": 0.018129031406715512,
+                "q1": 0.4149745414615609,
+                "q3": 0.4331035728682764,
+                "iqr_outliers": 1,
+                "stddev_outliers": 1,
+                "outliers": "1;1",
+                "ld15iqr": 0.4140226668678224,
+                "hd15iqr": 0.4777854159474373,
+                "ops": 2.334205244670038,
+                "total": 2.1420567070599645,
+                "data": [
+                    0.4777854159474373,
+                    0.4140226668678224,
+                    0.41529183299280703,
+                    0.41820962517522275,
+                    0.41674716607667506
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_horqrux[circuit_A n:10 D:5]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_horqrux[circuit_A n:10 D:5]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_A at 0x10538c680>]",
+                    10,
+                    5
+                ]
+            },
+            "param": "circuit_A n:10 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.9114732921589166,
+                "max": 0.9924927919637412,
+                "mean": 0.9376163250301033,
+                "stddev": 0.032440477923467555,
+                "rounds": 5,
+                "median": 0.934296540915966,
+                "iqr": 0.034512999176513404,
+                "q1": 0.9144213859690353,
+                "q3": 0.9489343851455487,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.9114732921589166,
+                "hd15iqr": 0.9924927919637412,
+                "ops": 1.066534331052623,
+                "total": 4.688081625150517,
+                "data": [
+                    0.934296540915966,
+                    0.9344149162061512,
+                    0.9924927919637412,
+                    0.9114732921589166,
+                    0.9154040839057416
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_horqrux[circuit_B n:10 D:2]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_horqrux[circuit_B n:10 D:2]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_B at 0x1213a5800>]",
+                    10,
+                    2
+                ]
+            },
+            "param": "circuit_B n:10 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.35726354108192027,
+                "max": 0.3811639591585845,
+                "mean": 0.365311091626063,
+                "stddev": 0.009937368395453,
+                "rounds": 5,
+                "median": 0.3606249578297138,
+                "iqr": 0.013631291862111539,
+                "q1": 0.35830141662154347,
+                "q3": 0.371932708483655,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.35726354108192027,
+                "hd15iqr": 0.3811639591585845,
+                "ops": 2.737392931456931,
+                "total": 1.826555458130315,
+                "data": [
+                    0.3811639591585845,
+                    0.3688556249253452,
+                    0.3606249578297138,
+                    0.35726354108192027,
+                    0.3586473751347512
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_horqrux[circuit_B n:10 D:5]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_horqrux[circuit_B n:10 D:5]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_B at 0x1213a5800>]",
+                    10,
+                    5
+                ]
+            },
+            "param": "circuit_B n:10 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.7748323751147836,
+                "max": 0.8815026660449803,
+                "mean": 0.8042685832362622,
+                "stddev": 0.044207331625365574,
+                "rounds": 5,
+                "median": 0.7827213751152158,
+                "iqr": 0.04076788615202531,
+                "q1": 0.7800153745338321,
+                "q3": 0.8207832606858574,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 0.7748323751147836,
+                "hd15iqr": 0.8815026660449803,
+                "ops": 1.2433657373214089,
+                "total": 4.021342916181311,
+                "data": [
+                    0.8005434588994831,
+                    0.7817430410068482,
+                    0.7827213751152158,
+                    0.7748323751147836,
+                    0.8815026660449803
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_horqrux[circuit_C n:10 D:2]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_horqrux[circuit_C n:10 D:2]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_C at 0x1213a6e80>]",
+                    10,
+                    2
+                ]
+            },
+            "param": "circuit_C n:10 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.635129916947335,
+                "max": 0.6637052078731358,
+                "mean": 0.6468774500302971,
+                "stddev": 0.01139008103219755,
+                "rounds": 5,
+                "median": 0.647700458066538,
+                "iqr": 0.01661026052897796,
+                "q1": 0.6369936355622485,
+                "q3": 0.6536038960912265,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 0.635129916947335,
+                "hd15iqr": 0.6637052078731358,
+                "ops": 1.545887864777423,
+                "total": 3.234387250151485,
+                "data": [
+                    0.6637052078731358,
+                    0.6502367921639234,
+                    0.637614875100553,
+                    0.635129916947335,
+                    0.647700458066538
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_vqe_horqrux[circuit_C n:10 D:5]",
+            "fullname": "tests/timings/vqe/test_shots.py::test_vqe_horqrux[circuit_C n:10 D:5]",
+            "params": {
+                "benchmark_vqe_ansatz": [
+                    "UNSERIALIZABLE[<function circuit_C at 0x1213a6e80>]",
+                    10,
+                    5
+                ]
+            },
+            "param": "circuit_C n:10 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 1.2755343751050532,
+                "max": 1.3793503751512617,
+                "mean": 1.330307691404596,
+                "stddev": 0.05015226712064368,
+                "rounds": 5,
+                "median": 1.3585725410375744,
+                "iqr": 0.08961925003677607,
+                "q1": 1.2763314059120603,
+                "q3": 1.3659506559488364,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 1.2755343751050532,
+                "hd15iqr": 1.3793503751512617,
+                "ops": 0.7517057944272705,
+                "total": 6.65153845702298,
+                "data": [
+                    1.2765970828477293,
+                    1.2755343751050532,
+                    1.3585725410375744,
+                    1.3614840828813612,
+                    1.3793503751512617
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2025-05-08T07:57:26.610770+00:00",
+    "version": "5.1.0"
+}

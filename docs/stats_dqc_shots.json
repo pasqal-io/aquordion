@@ -1,0 +1,42 @@
+{
+    "machine_info": {
+        "node": "nl-psq-031.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 16.0.0 (clang-1600.0.26.6)",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.13.2",
+        "python_version": "3.13.2",
+        "python_build": [
+            "main",
+            "Feb  4 2025 14:51:09"
+        ],
+        "release": "24.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.13.2.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 12,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M3 Pro"
+        }
+    },
+    "commit_info": {
+        "id": "39adb37a559391bbb4faf032df61694706cb8234",
+        "time": "2025-05-26T15:15:36+02:00",
+        "author_time": "2025-05-26T15:15:36+02:00",
+        "dirty": true,
+        "project": "aquordion",
+        "branch": "cm/fix_shots"
+    },
+    "benchmarks": [],
+    "datetime": "2025-05-26T13:35:06.442648+00:00",
+    "version": "5.1.0"
+}

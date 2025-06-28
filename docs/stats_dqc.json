@@ -1,0 +1,427 @@
+{
+    "machine_info": {
+        "node": "nl-psq-031.local",
+        "processor": "arm",
+        "machine": "arm64",
+        "python_compiler": "Clang 16.0.0 (clang-1600.0.26.6)",
+        "python_implementation": "CPython",
+        "python_implementation_version": "3.13.2",
+        "python_version": "3.13.2",
+        "python_build": [
+            "main",
+            "Feb  4 2025 14:51:09"
+        ],
+        "release": "24.4.0",
+        "system": "Darwin",
+        "cpu": {
+            "python_version": "3.13.2.final.0 (64 bit)",
+            "cpuinfo_version": [
+                9,
+                0,
+                0
+            ],
+            "cpuinfo_version_string": "9.0.0",
+            "arch": "ARM_8",
+            "bits": 64,
+            "count": 12,
+            "arch_string_raw": "arm64",
+            "brand_raw": "Apple M3 Pro"
+        }
+    },
+    "commit_info": {
+        "id": "39adb37a559391bbb4faf032df61694706cb8234",
+        "time": "2025-05-26T15:15:36+02:00",
+        "author_time": "2025-05-26T15:15:36+02:00",
+        "dirty": true,
+        "project": "aquordion",
+        "branch": "cm/fix_shots"
+    },
+    "benchmarks": [
+        {
+            "group": null,
+            "name": "test_dqc_pyq[HEA n:4 D:2]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_pyq[HEA n:4 D:2]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    4,
+                    2
+                ]
+            },
+            "param": "HEA n:4 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 0.8044801249634475,
+                "max": 4.272150374948978,
+                "mean": 1.5090312831569463,
+                "stddev": 1.5447009582116336,
+                "rounds": 5,
+                "median": 0.8209268329665065,
+                "iqr": 0.8931555000017397,
+                "q1": 0.8058507185778581,
+                "q3": 1.6990062185795978,
+                "iqr_outliers": 1,
+                "stddev_outliers": 1,
+                "outliers": "1;1",
+                "ld15iqr": 0.8044801249634475,
+                "hd15iqr": 4.272150374948978,
+                "ops": 0.6626767855388425,
+                "total": 7.5451564157847315,
+                "data": [
+                    4.272150374948978,
+                    0.8063075831159949,
+                    0.8044801249634475,
+                    0.8412914997898042,
+                    0.8209268329665065
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_pyq[HEA n:4 D:5]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_pyq[HEA n:4 D:5]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    4,
+                    5
+                ]
+            },
+            "param": "HEA n:4 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 1.597311332821846,
+                "max": 1.6797951669432223,
+                "mean": 1.6340000081341715,
+                "stddev": 0.03620420136657602,
+                "rounds": 5,
+                "median": 1.6197816249914467,
+                "iqr": 0.06284127099206671,
+                "q1": 1.6056346454424784,
+                "q3": 1.668475916434545,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 1.597311332821846,
+                "hd15iqr": 1.6797951669432223,
+                "ops": 0.6119951009926113,
+                "total": 8.170000040670857,
+                "data": [
+                    1.6797951669432223,
+                    1.6647028329316527,
+                    1.6197816249914467,
+                    1.597311332821846,
+                    1.6084090829826891
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_pyq[HEA n:6 D:2]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_pyq[HEA n:6 D:2]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    6,
+                    2
+                ]
+            },
+            "param": "HEA n:6 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 1.5583103750832379,
+                "max": 1.6252377079799771,
+                "mean": 1.5929431666154414,
+                "stddev": 0.030308456823161675,
+                "rounds": 5,
+                "median": 1.6056800000369549,
+                "iqr": 0.05371452070539817,
+                "q1": 1.5618941562715918,
+                "q3": 1.61560867697699,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 1.5583103750832379,
+                "hd15iqr": 1.6252377079799771,
+                "ops": 0.6277687873351566,
+                "total": 7.964715833077207,
+                "data": [
+                    1.6123989999759942,
+                    1.6056800000369549,
+                    1.6252377079799771,
+                    1.563088750001043,
+                    1.5583103750832379
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_pyq[HEA n:6 D:5]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_pyq[HEA n:6 D:5]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    6,
+                    5
+                ]
+            },
+            "param": "HEA n:6 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 3.213588207960129,
+                "max": 3.562623124802485,
+                "mean": 3.329489091504365,
+                "stddev": 0.13864051642394995,
+                "rounds": 5,
+                "median": 3.264879541937262,
+                "iqr": 0.15037704084534198,
+                "q1": 3.249220864730887,
+                "q3": 3.399597905576229,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 3.213588207960129,
+                "hd15iqr": 3.562623124802485,
+                "ops": 0.30034638123657864,
+                "total": 16.647445457521826,
+                "data": [
+                    3.2610984169878066,
+                    3.3452561658341438,
+                    3.213588207960129,
+                    3.562623124802485,
+                    3.264879541937262
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_horqrux[HEA n:4 D:2]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_horqrux[HEA n:4 D:2]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    4,
+                    2
+                ]
+            },
+            "param": "HEA n:4 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 1.2277175828348845,
+                "max": 1.4352945839054883,
+                "mean": 1.2979905917774885,
+                "stddev": 0.08533997880104378,
+                "rounds": 5,
+                "median": 1.2617344169411808,
+                "iqr": 0.11511628096923232,
+                "q1": 1.237270771060139,
+                "q3": 1.3523870520293713,
+                "iqr_outliers": 0,
+                "stddev_outliers": 1,
+                "outliers": "1;0",
+                "ld15iqr": 1.2277175828348845,
+                "hd15iqr": 1.4352945839054883,
+                "ops": 0.7704216088581847,
+                "total": 6.489952958887443,
+                "data": [
+                    1.4352945839054883,
+                    1.2617344169411808,
+                    1.2277175828348845,
+                    1.2404551671352237,
+                    1.3247512080706656
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_horqrux[HEA n:4 D:5]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_horqrux[HEA n:4 D:5]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    4,
+                    5
+                ]
+            },
+            "param": "HEA n:4 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 2.552778375102207,
+                "max": 2.7144168748054653,
+                "mean": 2.629178275121376,
+                "stddev": 0.061855429234013354,
+                "rounds": 5,
+                "median": 2.6104083338286728,
+                "iqr": 0.08541196770966053,
+                "q1": 2.591301344335079,
+                "q3": 2.6767133120447397,
+                "iqr_outliers": 0,
+                "stddev_outliers": 2,
+                "outliers": "2;0",
+                "ld15iqr": 2.552778375102207,
+                "hd15iqr": 2.7144168748054653,
+                "ops": 0.3803469736010332,
+                "total": 13.14589137560688,
+                "data": [
+                    2.7144168748054653,
+                    2.6641454577911645,
+                    2.552778375102207,
+                    2.60414233407937,
+                    2.6104083338286728
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_horqrux[HEA n:6 D:2]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_horqrux[HEA n:6 D:2]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    6,
+                    2
+                ]
+            },
+            "param": "HEA n:6 D:2",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 2.0228244168683887,
+                "max": 2.143879249924794,
+                "mean": 2.065606208378449,
+                "stddev": 0.045778792363943575,
+                "rounds": 5,
+                "median": 2.053759125061333,
+                "iqr": 0.03285395907005295,
+                "q1": 2.04474907257827,
+                "q3": 2.077603031648323,
+                "iqr_outliers": 1,
+                "stddev_outliers": 1,
+                "outliers": "1;1",
+                "ld15iqr": 2.0228244168683887,
+                "hd15iqr": 2.143879249924794,
+                "ops": 0.4841193814889936,
+                "total": 10.328031041892245,
+                "data": [
+                    2.0520572911482304,
+                    2.143879249924794,
+                    2.053759125061333,
+                    2.0228244168683887,
+                    2.0555109588894993
+                ],
+                "iterations": 1
+            }
+        },
+        {
+            "group": null,
+            "name": "test_dqc_horqrux[HEA n:6 D:5]",
+            "fullname": "tests/timings/dqc/test_pde_noshots.py::test_dqc_horqrux[HEA n:6 D:5]",
+            "params": {
+                "benchmark_dqc_ansatz": [
+                    "UNSERIALIZABLE[<function hea at 0x145810b80>]",
+                    6,
+                    5
+                ]
+            },
+            "param": "HEA n:6 D:5",
+            "extra_info": {},
+            "options": {
+                "disable_gc": true,
+                "timer": "perf_counter",
+                "min_rounds": 5,
+                "max_time": 1.0,
+                "min_time": 5e-06,
+                "warmup": false
+            },
+            "stats": {
+                "min": 4.290219916962087,
+                "max": 4.544705042149872,
+                "mean": 4.463560258643701,
+                "stddev": 0.10048791551756141,
+                "rounds": 5,
+                "median": 4.4837000840343535,
+                "iqr": 0.09282909386092797,
+                "q1": 4.432642166735604,
+                "q3": 4.525471260596532,
+                "iqr_outliers": 1,
+                "stddev_outliers": 1,
+                "outliers": "1;1",
+                "ld15iqr": 4.4801162499934435,
+                "hd15iqr": 4.544705042149872,
+                "ops": 0.22403640637840525,
+                "total": 22.31780129321851,
+                "data": [
+                    4.290219916962087,
+                    4.544705042149872,
+                    4.4801162499934435,
+                    4.519060000078753,
+                    4.4837000840343535
+                ],
+                "iterations": 1
+            }
+        }
+    ],
+    "datetime": "2025-05-26T13:19:16.049201+00:00",
+    "version": "5.1.0"
+}
