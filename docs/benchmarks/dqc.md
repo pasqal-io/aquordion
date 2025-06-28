@@ -30,6 +30,12 @@ frame_vqe['fn_circuit'] = frame_vqe['fn_circuit'].apply(lambda x: re.findall('fu
 frame_vqe['name'] = frame_vqe['name'].str.replace('dqc_', '')
 
 nqubits = frame_vqe.n_qubits.unique()
+from io import StringIO  # markdown-exec: hide
+from matplotlib.figure import Figure  # markdown-exec: hide
+def fig_to_html(fig: Figure) -> str:  # markdown-exec: hide
+    buffer = StringIO()  # markdown-exec: hide
+    fig.savefig(buffer, format="svg")  # markdown-exec: hide
+    return buffer.getvalue()  # markdown-exec: hide
 ```
 
 ## Timings
