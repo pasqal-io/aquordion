@@ -63,7 +63,7 @@ jobs:
           run: |
             python -m hatch -e tests run benchmarks
         - name: Store benchmark result
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v7
           with:
             name: stats
             path: docs/stats.json
@@ -91,7 +91,7 @@ jobs:
           run: |
             python -m hatch -e tests run vqe
         - name: Store benchmark result
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v7
           with:
             name: vqestatsnoshots
             path: docs/stats_vqe_noshots.json
@@ -119,7 +119,7 @@ jobs:
           run: |
             python -m hatch -e tests run vqeshots
         - name: Store benchmark result
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v7
           with:
             name: vqestatsshots
             path: docs/stats_vqe_shots.json
@@ -147,7 +147,7 @@ jobs:
           run: |
             python -m hatch -e tests run dqc
         - name: Store benchmark result
-          uses: actions/upload-artifact@v4
+          uses: actions/upload-artifact@v7
           with:
             name: dqcstats
             path: docs/stats_dqc.json
@@ -174,19 +174,19 @@ jobs:
           run: |
             hatch -v -e docs
         - name: Download benchmark API result
-          uses: actions/download-artifact@v4
+          uses: actions/download-artifact@v8
           with:
             name: stats
         - name: Download benchmark VQE result
-          uses: actions/download-artifact@v4
+          uses: actions/download-artifact@v8
           with:
             name: vqestatsnoshots
         - name: Download benchmark VQE result shots
-          uses: actions/download-artifact@v4
+          uses: actions/download-artifact@v8
           with:
             name: vqestatsshots
         - name: Download benchmark DQC result
-          uses: actions/download-artifact@v4
+          uses: actions/download-artifact@v8
           with:
             name: dqcstats
         - name: Test docs
@@ -212,19 +212,19 @@ jobs:
       run: |
         hatch -v -e docs
     - name: Download benchmark API result
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: stats
     - name: Download benchmark VQE result
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: vqestatsnoshots
     - name: Download benchmark VQE result shots
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: vqestatsshots
     - name: Download benchmark DQC result
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: dqcstats
     - name: Deploy docs with mike
